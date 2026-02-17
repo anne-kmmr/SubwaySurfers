@@ -2,6 +2,5 @@
 [![Publish Frontend](https://github.com/anne-kmmr/SubwaySurfers/actions/workflows/publish-frontend.yml/badge.svg)](https://github.com/anne-kmmr/SubwaySurfers/actions/workflows/publish-frontend.yml)
 
 
-#Information
-
+Information
 Everything was installed :)
