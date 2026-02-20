@@ -1,0 +1,125 @@
+html {
+    background-color:white;
+    justify-content: center;
+}
+
+body {
+    background-color: #DDEEFA;
+    display:flexbox;
+    min-height: 100dvh;
+    max-width: 430px;
+    box-sizing: border-box;
+    font-family: "Chewy", system-ui;
+}
+
+/* Der  */
+
+#backButton {
+    cursor: pointer;
+    background-color: transparent;
+    rotate: 180deg;
+    font-size: 40px;
+}
+/* Header gesamt. */
+
+.header {
+    height: 100px;
+    background-color: #F2F9FF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    padding-top:0px;
+}
+
+/* Header Überschrift*/
+
+.header h1 {
+    font-size: 40px;
+    color: #1982c4;
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* Einfach der Einstellungsbutton rechts oben*/
+
+#settingsBtn {
+    cursor: pointer;
+    background-color: transparent;
+    font-size: 65px;
+    border: none;
+    color: #1982c4;
+    font-weight: bold;
+}
+
+/* Content ist sozusagen der main teil von der App, könnte für dich relevant sein*/
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* frageDiv und antwortDiv sind nicht relevant für dich.*/
+
+.frageDiv, .antwortDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    gap: 20px;
+    padding: 20px;
+    background-color: #FFFFFF;
+    width: 80%;
+    border: 2px solid black;
+    border-color: #C4C4C4;
+    border-radius: 10px;
+    height: 150px;
+}
+
+.textInpt {
+    width: 175px;
+    padding: 10px;
+    font-size: 16px;
+    border-color: transparent;
+    height: 112.5px;
+    justify-self: flex-end;
+    font-family: "Chewy", system-ui;
+    font-size: 30px;
+}
+
+.textInpt#antwort {
+    justify-content: center;
+}
+
+.newCardCon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.submitChanges {
+    margin-top: 100px;
+    justify-content: space-evenly;
+    width: 100%;
+    display: flex;
+}
+
+.änderungBtn {
+    cursor: pointer;
+    background-color: #1982c4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    font-family: "Chewy", system-ui;
+    width: 150px;
+}
+
