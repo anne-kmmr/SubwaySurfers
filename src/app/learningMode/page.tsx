@@ -71,5 +71,3 @@ const LearningMode: React.FC<LearningModeProps> = ({ fach }) => {
     </div>
     );
     };
-
-    export default LearningMode;
