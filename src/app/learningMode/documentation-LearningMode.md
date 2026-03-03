@@ -32,4 +32,5 @@ ______________________
 
 03.03.2026:
 1. Anfang eigener Umbau: Dateiumbenennung .module.css sowie .tsx
-2. Umbau  von . html-File auf Typescript 
+2. Umbau  von . html-File auf Typescript
+3. Neuer Branch benötigt, switch von "Anneeee" auf "Anne" und pull von main, da sehr viele Konflikte und unntöige Dateien
