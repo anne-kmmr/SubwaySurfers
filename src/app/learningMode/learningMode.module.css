@@ -16,9 +16,10 @@ body {
     height: 100px;
     background-color: #F2F9FF;
     display: flex;
+    justify-content: space-between;
     justify-content: center;
     align-items: center;
-    padding: 0 15px;
+    padding: 20px;
     position: relative;
 }
 
@@ -30,7 +31,7 @@ body {
     line-height: 1;
 }
 
-#backButton {
+.backButton {
     cursor: pointer;
     background-color: transparent;
     rotate: 180deg;
@@ -39,15 +40,15 @@ body {
     position: absolute;
 }
 
-#settingsBtn {
-    cursor: pointer;
-    background-color: transparent;
-    font-size: 65px;
-    border: none;
-    color: #1982c4;
-    font-weight: bold;
-    right: 15px;
-    position: absolute;
+.settingsBtn {
+  cursor: pointer;
+  background-color: transparent;
+  font-size: 65px;
+  border: none;
+  color: #1982c4;
+  font-weight: bold;
+  right: 15px;
+  position: absolute;
 }
 
 .content {
@@ -57,7 +58,7 @@ body {
     justify-content: center;
     gap: 20px;
     padding: 20px;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 .card-container {
@@ -73,22 +74,29 @@ body {
     height: 340px;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 0.6s ease;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    cursor: pointer;
 }
 
-.card.flipped {
+.flipped {
     transform: rotateY(180deg);
 }
 
 .card-front,
 .card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    border-radius: 20px;
-    backface-visibility: hidden;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: white;
 }
 
 .card-back {
@@ -101,10 +109,11 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    font-size: 28px;
+    font-size: 24px;
     color: black;
-    margin: 0;
+    margin-top: 10px;
     width: 100%;
+    font-size: 1.5rem;
 }
 
 .answer-line {
@@ -117,24 +126,7 @@ body {
     background-color: #9FBBD4;
 }
 
-.show-answer-btn {
-    background-color: #3F6FA3;
-    color: white;
-    border: none;
-    padding: 14px;
-    font-size: 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 70%;
-    margin: 0 auto;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
+.show-answer-btn,
 .answer-btns {
     position: absolute;
     bottom: 20px;
@@ -144,17 +136,30 @@ body {
     gap: 10px;
     width: 70%;
     justify-content: space-between;
+    margin-top: 20px;
+}
+
+.show-answer-btn {
+  display: inline-block;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #1982c4;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .answer-btns button {
-    flex: 1;
-    padding: 14px;
-    font-size: 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    color: white;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
 .correct-btn {
@@ -163,4 +168,16 @@ body {
 
 .wrong-btn {
     background-color: #ff595e;
+}
+
+.show-answer-btn:hover {
+  background-color: #145a8e;
+}
+
+.correct-btn:hover {
+  background-color: #28a745;
+}
+
+.wrong-btn:hover {
+  background-color: #dc3545;
 }

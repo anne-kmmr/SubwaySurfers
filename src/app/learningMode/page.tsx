@@ -1,73 +1,54 @@
-import React, { useState } from "react";
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./learningMode.module.css";
 
-interface LearningModeProps {
-fach: string;
-}
+export default function Home() {
+  const [flipped, setFlipped] = useState(false);
 
-const LearningMode: React.FC<LearningModeProps> = ({ fach }) => {
-    const [isFlipped, setIsFlipped] = useState(false);
+const Header = () => (
+  <div className={styles.header}>
+    <h1 className={styles.backButton} onClick={() => router.push("/")}>
+      ➜
+    </h1>
+    <h1 className={styles.kartenTitel}>Fach <br /> lernen</h1>
+    <button className={styles.settingsBtn} onClick={() => router.push("/")}>&#9881;</button>
+  </div>
+);
 
-    const handleShowAnswer = () => {
-    setIsFlipped(true);
-    };
+  const CardFront = ({ onShowAnswer }: { onShowAnswer: () => void }) => (
+    <div className={styles["card-front"]}>
+      <div className={styles.textOutputDiv}>Frage: 2 + 2 = ?</div>
+      <div className={styles["answer-line"]}></div>
+      <button className={styles["show-answer-btn"]} onClick={onShowAnswer}>Antwort anzeigen</button>
+    </div>
+  );
 
-    const handleResetCard = () => {
-    setIsFlipped(false);
-    };
+  const CardBack = ({ onFlipBack }: { onFlipBack: () => void }) => (
+    <div className={styles["card-back"]}>
+      <div className={styles.textOutputDiv}>Antwort: 4</div>
+      <div className={styles["answer-line"]}></div>
+      <div className={styles["answer-btns"]}>
+        <button className={styles["correct-btn"]} onClick={onFlipBack}>Richtig</button>
+        <button className={styles["wrong-btn"]} onClick={onFlipBack}>Falsch</button>
+      </div>
+    </div>
+  );
 
-    return (
+  const Card = () => (
+    <div className={styles["card-container"]}>
+      <div className={`${styles.card} ${flipped ? styles.flipped : ""}`}>
+        <CardFront onShowAnswer={() => setFlipped(true)} />
+        <CardBack onFlipBack={() => setFlipped(false)} />
+      </div>
+    </div>
+  );
+
+  return (
     <div>
-        <div className={styles.header}>
-            <h1 id="backButton">➜</h1>
-            <h1 id="kartenTitel">
-                {fach} <br /> lernen
-            </h1>
-            <button id="settingsBtn">&#9881;</button>
-        </div>
-
-        <div className={styles.content}>
-            <div className={styles["card-container"]}>
-                <div
-                        className={`${styles.card} ${
-                        isFlipped ? styles.flipped : ""
-                }`}
-                >
-                <div className={styles["card-front"]}>
-                    <div className={styles.textOutputDiv}>
-                        Frage: 2 + 2 = ?
-                    </div>
-                    <div className={styles["answer-line"]}></div>
-                    <button
-                            className={styles["show-answer-btn"]}
-                            onClick={handleShowAnswer}
-                    >
-                        Antwort anzeigen
-                    </button>
-                </div>
-
-                <div className={styles["card-back"]}>
-                    <div className={styles.textOutputDiv}>
-                        Antwort: 4
-                    </div>
-                    <div className={styles["answer-btns"]}>
-                        <button
-                                className={styles["correct-btn"]}
-                                onClick={handleResetCard}
-                        >
-                            Richtig
-                        </button>
-                        <button
-                                className={styles["wrong-btn"]}
-                                onClick={handleResetCard}
-                        >
-                            Falsch
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+      <Header />
+      <div className={styles.content}><Card /></div>
     </div>
-    </div>
-    );
-    };
+  );
+}
