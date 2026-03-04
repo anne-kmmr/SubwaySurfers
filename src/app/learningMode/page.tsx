@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import styles from "./learningMode.module.css";
 
 export default function Home() {
@@ -9,11 +8,9 @@ export default function Home() {
 
 const Header = () => (
   <div className={styles.header}>
-    <h1 className={styles.backButton} onClick={() => router.push("/")}>
-      ➜
-    </h1>
-    <h1 className={styles.kartenTitel}>Fach <br /> lernen</h1>
-    <button className={styles.settingsBtn} onClick={() => router.push("/")}>&#9881;</button>
+   <h1 className={styles.backButton}>➜</h1>
+   <h1 className={styles.kartenTitel}>Fach <br /> lernen</h1>
+   <button className={styles.settingsBtn}>&#9881;</button>
   </div>
 );
 
