@@ -38,6 +38,7 @@ body {
     font-size: 40px;
     left: 15px;
     position: absolute;
+    color: #1982c4;
 }
 
 .settingsBtn {
@@ -168,16 +169,4 @@ body {
 
 .wrong-btn {
     background-color: #ff595e;
-}
-
-.show-answer-btn:hover {
-  background-color: #145a8e;
-}
-
-.correct-btn:hover {
-  background-color: #28a745;
-}
-
-.wrong-btn:hover {
-  background-color: #dc3545;
 }
