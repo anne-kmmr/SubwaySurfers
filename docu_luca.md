@@ -1,6 +1,0 @@
-- Erstellung der Route `/home`
-- Darstellung der Lernsets (Mathematik, Deutsch, Englisch)
-- Buttons für Lernmodus und Bearbeiten
-- Zentraler "Karteikasten"-Button unter den Lernsets
-- Farben ausschließlich über CSS Modules definiert
-- Mobile-freundliches Layout (Smartphone und Tablet)
