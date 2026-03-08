@@ -46,4 +46,11 @@ ______________________
 
 04.03.2026:
 1. Button verändetr, push auf Branch und Zusammenspiel mit Sandros Code als Test
+2. Testergebnisse: Branch "Zwischenagabe2" klappt einwandfrei und alles funktioniert, es fehlt nur noch der Code der anderen drei
+
+______________________
+
+05.03.2026:
+1. Fehlerbehebung und Änderungen nach Absprache mit Sandro (siehe Ticket: https://annekaemmerer.atlassian.net/jira/software/projects/SUB/boards/3?selectedIssue=SUB-6)
+2. Push auf Branch "Anne" und Eröffnung eines PR
 

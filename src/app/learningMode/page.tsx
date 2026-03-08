@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import styles from "./learningMode.module.css";
 
 export default function Home() {
@@ -8,9 +9,9 @@ export default function Home() {
 
 const Header = () => (
   <div className={styles.header}>
-   <h1 className={styles.backButton}>➜</h1>
+   <Link href="../" className={styles.backButton}>➜</Link>
    <h1 className={styles.kartenTitel}>Fach <br /> lernen</h1>
-   <button className={styles.settingsBtn}>&#9881;</button>
+   <Link href="/" className={styles.settingsBtn}>&#9881;</Link>
   </div>
 );
 
