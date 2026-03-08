@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import "./editCardStyles.module.css";
+import Link from "next/link";
+import styles from "./editCardStyles.module.css";
 
 const KartenBearbeiten: React.FC = () => {
-  const [frage, setFrage] = useState<string>("2 + 2 = ?");
-  const [antwort, setAntwort] = useState<string>("4");
+  const [frage, setFrage] = useState("2 + 2 = ?");
+  const [antwort, setAntwort] = useState("4");
 
   const handleSpeichern = () => {
     console.log("Gespeichert:");
@@ -18,47 +19,56 @@ const KartenBearbeiten: React.FC = () => {
   };
 
   return (
-    <div>
-      <div className="header">
-        <h1 id="backButton">➜</h1>
-        <h1 id="kartenTitel">
-          Karte <br /> Bearbeiten
+    <div className={styles.wrapper}>
+      
+      <div className={styles.header}>
+        <h1 className={styles.backButton}>←</h1>
+
+        <h1 className={styles.kartenTitel}>
+          Karte
+          <br />
+          Bearbeiten
         </h1>
-        <button id="settingsBtn">&#9881;</button>
+
+        <button className={styles.settingsBtn}>⚙</button>
       </div>
 
-      <div className="content">
-        <div className="frageDiv">
+      <div className={styles.content}>
+        
+        <div className={styles.card}>
           <h2>Frage:</h2>
+
           <input
             type="text"
-            className="textInpt"
-            placeholder="Frage eingeben..."
+            className={styles.input}
             value={frage}
             onChange={(e) => setFrage(e.target.value)}
           />
         </div>
 
-        <div className="antwortDiv" id="antwort">
+        <div className={styles.card}>
           <h2>Antwort:</h2>
+
           <input
             type="text"
-            className="textInpt"
-            placeholder="Antwort eingeben..."
+            className={styles.input}
             value={antwort}
             onChange={(e) => setAntwort(e.target.value)}
           />
         </div>
+
       </div>
 
-      <div className="submitChanges">
-        <button className="änderungBtn" id="speichernBtn" onClick={handleSpeichern}>
+      <div className={styles.buttonContainer}>
+        <button className={styles.button} onClick={handleSpeichern}>
           Speichern
         </button>
-        <button className="änderungBtn" id="abbrechenBtn" onClick={handleAbbrechen}>
+
+        <button className={styles.button} onClick={handleAbbrechen}>
           Abbrechen
         </button>
       </div>
+
     </div>
   );
 };
