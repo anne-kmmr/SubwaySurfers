@@ -1,11 +1,5 @@
 import Link from "next/link";
 import styles from "./FlashcardBoxes.module.css";
-import { Chewy } from "next/font/google";
-
-const chewy = Chewy({
-  subsets: ["latin"],
-  weight: "400",
-});
 
 type BoxCardProps = {
   title: string;
@@ -112,7 +106,7 @@ export default function BoxCardPage() {
   };
 
   return (
-    <main className={`${styles.page} ${chewy.className}`}>
+    <main className={`${styles.page}`}>
       <header className={styles.topbar}>
         <div className={styles.topbarInner}>
           <IconButton href={routes.back} label="Zurück">
