@@ -1,0 +1,32 @@
+.app {
+  padding: 40px 20px;
+  flex-direction: column;
+}
+
+.title {
+  color: #21bae4;
+  font-size: 8vw;
+}
+
+.content {
+  padding: 16px;
+  color: black;
+}
+
+.button {
+  font-size: 5vw;
+  box-sizing: border-box;
+  background-color: #32639a;
+  border-radius: 2vw;
+  color: #ffffff;
+}
+
+.li {
+  display: flex;
+  font-size: 5vw;
+  justify-content: space-between;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 2vw;
+  background-color: #ffffff;
+}

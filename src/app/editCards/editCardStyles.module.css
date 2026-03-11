@@ -1,46 +1,7 @@
 .wrapper {
-  background-color: #dcecf7;
-  min-height: 100vh;
-  max-width: 430px;
-  margin: 0 auto;
-}
-
-body {
-    font-family:"Chewy", system-ui;
-}
-
-/* HEADER */
-
-.header {
-  height: 110px;
-  background-color: #eef7ff;
-
-  display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-
-  padding: 0 20px;
-}
-
-.backButton {
-  font-size: 40px;
-  color: #1982c4;
-  cursor: pointer;
-}
-
-.kartenTitel {
-  font-size: 38px;
-  color: #1982c4;
-  text-align: center;
-  line-height: 1.1;
-}
-
-.settingsBtn {
-  font-size: 40px;
-  border: none;
-  background: transparent;
-  color: #1982c4;
-  cursor: pointer;
+  justify-content: center;
 }
 
 /* CONTENT */
@@ -63,7 +24,7 @@ body {
 
   border-radius: 12px;
   border: 2px solid #bfbfbf;
-font-family:"Chewy", system-ui;
+  font-family: "Chewy", system-ui;
   display: flex;
   align-items: center;
 
@@ -96,7 +57,7 @@ font-family:"Chewy", system-ui;
   color: white;
   border: none;
   border-radius: 6px;
-font-family:"Chewy", system-ui;
+  font-family: "Chewy", system-ui;
   width: 175px;
   height: 50px;
 

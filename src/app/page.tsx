@@ -1,80 +1,56 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import { useRouter } from "next/navigation";
+import styles from "./Home.module.css";
+import Header from "./components/Header/Header";
+
+export default function HomePage() {
+  const router = useRouter();
+
+  const sets = [
+    { id: "mathe", title: "Mathematik", count: 12, color: "#7ed957" },
+    { id: "deutsch", title: "Deutsch", count: 8, color: "#ffd93d" },
+    { id: "englisch", title: "Englisch", count: 15, color: "#4dabf7" },
+  ];
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <h1> Hello TINF25B5!</h1>
-        <br/>
-        <br/>
-        <Image
-          className={styles.logo}
-          src={`/next.svg`}
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <>
+      <Header title="Home" backHref="/" />
+      <main className={styles.container}>
+        {sets.map((set) => (
+          <div
+            key={set.id}
+            className={styles.card}
+            style={{ borderLeft: `10px solid ${set.color}` }}
+          >
+            <h2>{set.title}</h2>
+            <p>{set.count} Karten</p>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src={`/vercel.svg`}
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
+            <div className={styles.buttonRow}>
+              <button
+                style={{ backgroundColor: set.color, color: "white" }}
+                onClick={() => router.push(`/learn/${set.id}`)}
+              >
+                Lernen
+              </button>
+
+              <button
+                style={{ backgroundColor: "#ff922b", color: "white" }}
+                onClick={() => router.push(`/edit/${set.id}`)}
+              >
+                ✏️
+              </button>
+
+              <button
+                style={{ backgroundColor: "#845ef7", color: "white" }}
+                onClick={() => router.push(`/boxes/${set.id}`)}
+              >
+                Karteikasten
+              </button>
+            </div>
+          </div>
+        ))}
       </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image aria-hidden src={`/file.svg`} alt="File icon" width={16} height={16} />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image aria-hidden src={`/window.svg`} alt="Window icon" width={16} height={16} />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image aria-hidden src={`${process.env.BASE_PATH}/globe.svg`} alt="Globe icon" width={16} height={16} />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    </>
   );
 }
