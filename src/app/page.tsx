@@ -2,6 +2,9 @@
 
 import styles from "./Home.module.css";
 import Header from "./components/Header/Header";
+import IconButton from "./components/IconButton/IconButton";
+import PencilIcon from "./components/Icons/PencilIcon/PencilIcon";
+
 import Link from "next/link";
 
 export default function HomePage() {
@@ -15,6 +18,8 @@ export default function HomePage() {
   return (
     <>
       <Header title="Home" backHref="/" />
+        <Link className={styles.button} href="/createBoxView">+ Neue Karte</Link>
+
       <main className={styles.container}>
         {sets.map((set) => (
           <div
@@ -22,7 +27,8 @@ export default function HomePage() {
             className={styles.card}
             style={{ borderLeft: `10px solid ${set.color}` }}
           >
-            <h2>{set.title}</h2>
+
+           <h2>{set.title}</h2>
             <p>{set.count} Karten</p>
 
             <div className={styles.buttonRow}>
@@ -34,13 +40,9 @@ export default function HomePage() {
                 Lernen
               </Link>
 
-              <Link
-                href={"/cardsView"}
-                className={styles.button}
-                style={{ backgroundColor: "#ff922b", color: "white" }}
-              >
-                ✏️
-              </Link>
+              <IconButton href="/cardsView" label="Karten bearbeiten">
+                <PencilIcon width={24} height={24} />
+              </IconButton>
 
               <Link
                 href={"/flashcardboxes"}

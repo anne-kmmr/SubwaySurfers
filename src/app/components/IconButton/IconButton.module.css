@@ -1,0 +1,14 @@
+.iconButton {
+  width: 44px;
+  height: 44px;
+
+  color: var(--darkblue);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+  background-color: var(--white);
+  box-shadow: 0 0.9vw 2.2vw rgba(0, 0, 0, 0.12);
+  font-size: 26px;
+}
