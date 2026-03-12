@@ -1,7 +1,7 @@
 import styles from "./Header.module.css";
 import Link from "next/link";
 
-import IconButton from "../IconButton/IconButton";
+import IconButton from "../Icons/IconButton/IconButton";
 
 type HeaderProps = {
   title: string;
@@ -10,26 +10,26 @@ type HeaderProps = {
 
 export default function Header({ title, backHref }: HeaderProps) {
   const routes = {
-    back: "/",
     settings: "/settings",
-    toLearn: "/",
-    inProgress: "/",
-    learned: "/",
   };
 
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
-        <IconButton href={routes.back} label="Zurück">
-          <ArrowLeftIcon width={24} height={24} />
-        </IconButton>
+         {backHref ? (
+           <IconButton href={backHref} label="Zurück">
+             <ArrowLeftIcon width={24} height={24} />
+           </IconButton>
+         ) : (
+           <div style={{ width: "44px" }} /> // Platzhalter
+         )}
 
-        <h1 className={styles.headerTitle}>{title}</h1>
+         <h1 className={styles.headerTitle}>{title}</h1>
 
-        <IconButton href={routes.settings} label="Einstellungen">
-          <SettingsIcon width={24} height={24} />
-        </IconButton>
-      </div>
+         <IconButton href={routes.settings} label="Einstellungen">
+           <SettingsIcon width={24} height={24} />
+         </IconButton>
+       </div>
     </header>
   );
 }

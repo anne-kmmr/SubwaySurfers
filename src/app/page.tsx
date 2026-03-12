@@ -2,13 +2,11 @@
 
 import styles from "./Home.module.css";
 import Header from "./components/Header/Header";
-import IconButton from "./components/IconButton/IconButton";
+import IconButton from "./components/Icons/IconButton/IconButton";
 import PencilIcon from "./components/Icons/PencilIcon/PencilIcon";
-
 import Link from "next/link";
 
 export default function HomePage() {
-
   const sets = [
     { id: "mathe", title: "Mathematik", count: 12, color: "#7ed957" },
     { id: "deutsch", title: "Deutsch", count: 8, color: "#ffd93d" },
@@ -17,7 +15,7 @@ export default function HomePage() {
 
   return (
     <>
-      <Header title="Home" backHref="/" />
+      <Header title="Home" />
         <Link className={styles.button} href="/createBoxView">+ Neue Karte</Link>
 
       <main className={styles.container}>
