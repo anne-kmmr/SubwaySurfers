@@ -43,7 +43,7 @@ export default function Home() {
 
   return (
     <>
-      <Header title="Fach lernen" backHref="/" />;
+      <Header title="Fach lernen" backHref="/" />
       <main className={styles.content}>
         <Card />
       </main>

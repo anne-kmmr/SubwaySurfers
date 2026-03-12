@@ -1,5 +1,6 @@
 import styles from "./cardsView.module.css";
 import Header from "../components/Header/Header";
+import Link from "next/link";
 
 const content = " 2 + 2 = ?";
 
@@ -9,16 +10,16 @@ export default function createBrowser() {
       <Header title="Mathematik Karten" backHref="/" />
       <main className={`${styles.app}`}>
         <div>
-          <button type="button" className={`${styles.button}`}>
+          <Link className={`${styles.button}`} href={"/editCards"}>
             +Neue Karte
-          </button>
+          </Link>
         </div>
         <div className={`${styles.content}`}>
           <li className={`${styles.li}`}>
             {content}
-            <button type="button" className={`${styles.button}`}>
+            <Link className={`${styles.button}`} href={"/editCards"}>
               Bearbeiten
-            </button>
+            </Link>
           </li>
         </div>
       </main>

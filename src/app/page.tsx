@@ -1,11 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import styles from "./Home.module.css";
 import Header from "./components/Header/Header";
+import Link from "next/link";
 
 export default function HomePage() {
-  const router = useRouter();
 
   const sets = [
     { id: "mathe", title: "Mathematik", count: 12, color: "#7ed957" },
@@ -27,26 +26,29 @@ export default function HomePage() {
             <p>{set.count} Karten</p>
 
             <div className={styles.buttonRow}>
-              <button
+              <Link
+                href={"/learningMode"}
+                className={styles.button}
                 style={{ backgroundColor: set.color, color: "white" }}
-                onClick={() => router.push(`/learn/${set.id}`)}
               >
                 Lernen
-              </button>
+              </Link>
 
-              <button
+              <Link
+                href={"/cardsView"}
+                className={styles.button}
                 style={{ backgroundColor: "#ff922b", color: "white" }}
-                onClick={() => router.push(`/edit/${set.id}`)}
               >
                 ✏️
-              </button>
+              </Link>
 
-              <button
+              <Link
+                href={"/flashcardboxes"}
+                className={styles.button}
                 style={{ backgroundColor: "#845ef7", color: "white" }}
-                onClick={() => router.push(`/boxes/${set.id}`)}
               >
                 Karteikasten
-              </button>
+              </Link>
             </div>
           </div>
         ))}

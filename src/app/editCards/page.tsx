@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import styles from "./editCardStyles.module.css";
 import Header from "../components/Header/Header";
+import Link from "next/link";
 
 const KartenBearbeiten: React.FC = () => {
   const [frage, setFrage] = useState("2 + 2 = ?");
@@ -47,13 +48,21 @@ const KartenBearbeiten: React.FC = () => {
         </div>
 
         <div className={styles.buttonContainer}>
-          <button className={styles.button} onClick={handleSpeichern}>
+          <Link
+            className={styles.button}
+            href={"/cardsView"}
+            onClick={handleSpeichern}
+          >
             Speichern
-          </button>
+          </Link>
 
-          <button className={styles.button} onClick={handleAbbrechen}>
+          <Link
+            className={styles.button}
+            href={"/cardsView"}
+            onClick={handleAbbrechen}
+          >
             Abbrechen
-          </button>
+          </Link>
         </div>
       </main>
     </>

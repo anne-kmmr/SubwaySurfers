@@ -38,15 +38,6 @@ export default function BoxCardPage() {
     learned: 3,
   };
 
-  //TODO: später richtige Routen einfügen
-  const routes = {
-    back: "/",
-    settings: "/",
-    toLearn: "/",
-    inProgress: "/",
-    learned: "/",
-  };
-
   return (
     <>
       <Header title="Lernboxen" backHref="/" />
@@ -55,19 +46,19 @@ export default function BoxCardPage() {
           title="Zu Lernen"
           count={counts.toLearn}
           variant="red"
-          href={routes.toLearn}
+          href="/learningMode"
         />
         <BoxCard
           title="In Arbeit"
           count={counts.inProgress}
           variant="yellow"
-          href={routes.inProgress}
+          href="/learningMode"
         />
         <BoxCard
           title="Gelernt"
           count={counts.learned}
           variant="green"
-          href={routes.learned}
+          href="/learningMode"
         />
       </main>
     </>
