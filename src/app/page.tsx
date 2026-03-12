@@ -16,42 +16,48 @@ export default function HomePage() {
   return (
     <>
       <Header title="Home" />
-        <Link className={styles.button} href="/createBoxView">+ Neue Karte</Link>
 
       <main className={styles.container}>
-        {sets.map((set) => (
-          <div
-            key={set.id}
-            className={styles.card}
-            style={{ borderLeft: `10px solid ${set.color}` }}
-          >
+        <div className={styles.newBoxContainer}>
+          <Link className={styles.newBoxLink} href="/createBoxView">
+            + Neue Karteikartenbox
+          </Link>
+        </div>
 
-           <h2>{set.title}</h2>
-            <p>{set.count} Karten</p>
+        <div className={styles.cardsWrapper}>
+          {sets.map((set) => (
+            <div
+              key={set.id}
+              className={styles.card}
+              style={{ borderLeft: `10px solid ${set.color}` }}
+            >
+              <h2>{set.title}</h2>
+              <p>{set.count} Karten</p>
 
-            <div className={styles.buttonRow}>
-              <Link
-                href={"/learningMode"}
-                className={styles.button}
-                style={{ backgroundColor: set.color, color: "white" }}
-              >
-                Lernen
-              </Link>
+              <div className={styles.buttonRow}>
+                <Link
+                  href={"/learningMode"}
+                  className={styles.button}
+                  style={{ backgroundColor: set.color, color: "white" }}
+                >
+                  Lernen
+                </Link>
 
-              <IconButton href="/cardsView" label="Karten bearbeiten">
-                <PencilIcon width={24} height={24} />
-              </IconButton>
+                <IconButton href="/cardsView" label="Karten bearbeiten">
+                  <PencilIcon className={styles.PencilIcon} />
+                </IconButton>
 
-              <Link
-                href={"/flashcardboxes"}
-                className={styles.button}
-                style={{ backgroundColor: "#845ef7", color: "white" }}
-              >
-                Karteikasten
-              </Link>
+                <Link
+                  href={"/flashcardboxes"}
+                  className={styles.button}
+                  style={{ backgroundColor: "#845ef7", color: "white" }}
+                >
+                  Karteikasten
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </main>
     </>
   );
