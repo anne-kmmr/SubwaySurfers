@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "./flashcardBoxes.module.css";
+import styles from "./flashcardboxes.module.css";
 import Header from "../components/Header/Header";
 
 type BoxCardProps = {
