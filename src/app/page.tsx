@@ -19,9 +19,7 @@ export default function HomePage() {
 
       <main className={styles.container}>
         <div className={styles.newBoxContainer}>
-          <Link className={styles.newBoxLink} href="/createBoxView">
-            + Neue Karteikartenbox
-          </Link>
+          <Link className={styles.newBoxLink} href="/createBoxView">+ Neue Karteikartenbox</Link>
         </div>
 
         <div className={styles.cardsWrapper}>

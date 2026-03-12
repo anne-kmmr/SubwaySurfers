@@ -16,9 +16,7 @@ export default function CardsView() {
       <Header title="Mathematik Karten" backHref="/" />
       <main className={styles.app}>
         <div className={styles.newCardContainer}>
-          <Link className={styles.button} href="/editCards">
-            + Neue Karte
-          </Link>
+          <Link className={styles.button} href="/editCards">+ Neue Karte</Link>
         </div>
         <ul className={styles.content}>
           {cards.map((card, index) => (

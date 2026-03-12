@@ -31,7 +31,6 @@ function BoxCard({ title, count, variant, href }: BoxCardProps) {
 }
 
 export default function BoxCardPage() {
-  //TODO: später dynamisch aus DB holen
   const counts = {
     toLearn: 8,
     inProgress: 4,

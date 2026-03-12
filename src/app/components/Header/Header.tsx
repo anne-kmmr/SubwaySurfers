@@ -1,6 +1,5 @@
 import styles from "./Header.module.css";
 import Link from "next/link";
-
 import IconButton from "../Icons/IconButton/IconButton";
 
 type HeaderProps = {
