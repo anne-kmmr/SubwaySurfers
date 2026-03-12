@@ -9,7 +9,7 @@ type HeaderProps = {
 export default function Header({ title, backHref }: HeaderProps) {
   const routes = {
     back: "/",
-    settings: "/",
+    settings: "/settings",
     toLearn: "/",
     inProgress: "/",
     learned: "/",
