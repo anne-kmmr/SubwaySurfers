@@ -1,11 +1,12 @@
 name: Build Frontend
-
 on:
   push:
   workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
