@@ -56,7 +56,7 @@ export default function Home() {
 
     const Card = () => (
         <div className={styles["card-container"]}>
-            <div className={`${styles.card} ${flipped ? styles.flipped : ""}`}>
+            <div className={`${styles.card} ${flipped ? styles.cardFlipped : ""}`}>
                 <CardFront onShowAnswer={() => setFlipped(true)} />
                 <CardBack onFlipBack={handleFlipBack} />
             </div>
