@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import styles from "./IconButton.module.css";
+import React from "react";
 
 type IconButtonProps = {
   href: string;

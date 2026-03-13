@@ -3,7 +3,7 @@
 import styles from "./Home.module.css";
 import Header from "./components/Header/Header";
 import IconButton from "./components/Icons/IconButton/IconButton";
-import PencilIcon from "./components/Icons/PencilIcon/PencilIcon";
+import EyeIcon from "@/app/components/Icons/EyeIcon/EyeIcon";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -42,7 +42,7 @@ export default function HomePage() {
                 </Link>
 
                 <IconButton href="/cardsView" label="Karten bearbeiten">
-                  <PencilIcon className={styles.PencilIcon} />
+                  <EyeIcon className={styles.EyeIcon} />
                 </IconButton>
 
                 <Link

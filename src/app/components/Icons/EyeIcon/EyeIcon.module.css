@@ -1,4 +1,4 @@
-.pencilIcon {
+.EyeIcon {
   background-color: var(--red);
   border-radius: 999px;
   padding: 4px;
@@ -9,7 +9,7 @@
   height: 44px;
 }
 
-.pencilIcon svg {
+.EyeIcon svg {
   width: 24px;
   height: 24px;
   stroke: white;

@@ -1,14 +1,17 @@
-import { sql } from "../../../lib/db";
+import { sql } from "@/lib/db";
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    const url = new URL(req.url);
+    const limit = parseInt(url.searchParams.get("limit") || "0"); // 0 = alle
+
     const vocab = await sql`
       SELECT * FROM vocabulary
-      WHERE set = 'Mathe'
+                      ${limit > 0 ? sql`LIMIT ${limit}` : sql``}
       ORDER BY RANDOM()
-      LIMIT 1
     `;
-    return new Response(JSON.stringify(vocab[0] || null), {
+
+    return new Response(JSON.stringify(vocab), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
