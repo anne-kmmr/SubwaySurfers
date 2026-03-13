@@ -1,5 +1,7 @@
+"use client"
+
 import styles from "./Header.module.css";
-import Link from "next/link";
+import {useState, useRef, useEffect} from "react";
 import IconButton from "../Icons/IconButton/IconButton";
 
 type HeaderProps = {
@@ -8,28 +10,46 @@ type HeaderProps = {
 };
 
 export default function Header({ title, backHref }: HeaderProps) {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const [twoLines, setTwoLines] = useState(false);
+
+  useEffect(() => {
+    const el = titleRef.current;
+    if (!el) return;
+
+    const lineHeight = parseFloat(getComputedStyle(el).lineHeight);
+    const lines = Math.round(el.clientHeight / lineHeight);
+
+    setTwoLines(lines > 1);
+  }, [title]);
+
   const routes = {
     settings: "/settings",
   };
 
   return (
-    <header className={styles.header}>
-      <div className={styles.headerContainer}>
-         {backHref ? (
-           <IconButton href={backHref} label="Zurück">
-             <ArrowLeftIcon width={24} height={24} />
-           </IconButton>
-         ) : (
-           <div style={{ width: "44px" }} /> // Platzhalter
-         )}
+      <header className={styles.header}>
+        <div className={styles.headerContainer}>
+          {backHref ? (
+              <IconButton href={backHref} label="Zurück">
+                <ArrowLeftIcon width={24} height={24} />
+              </IconButton>
+          ) : (
+              <div style={{ width: "44px" }} />
+          )}
 
-         <h1 className={styles.headerTitle}>{title}</h1>
+          <h1
+              ref={titleRef}
+              className={`${styles.headerTitle} ${twoLines ? styles.smallTitle : styles.bigTitle}`}
+          >
+            {title}
+          </h1>
 
-         <IconButton href={routes.settings} label="Einstellungen">
-           <SettingsIcon width={24} height={24} />
-         </IconButton>
-       </div>
-    </header>
+          <IconButton href={routes.settings} label="Einstellungen">
+            <SettingsIcon width={24} height={24} />
+          </IconButton>
+        </div>
+      </header>
   );
 }
 
