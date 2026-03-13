@@ -8,11 +8,13 @@ import { useSearchParams } from "next/navigation";
 
 const KartenBearbeiten: React.FC = () => {
   const searchParams = useSearchParams();
-  const questionParam = searchParams.get("question") || "";
-  const answerParam = searchParams.get("answer") || "";
+  const [frage, setFrage] = useState("");
+  const [antwort, setAntwort] = useState("");
 
-  const [frage, setFrage] = useState(questionParam);
-  const [antwort, setAntwort] = useState(answerParam);
+  useEffect(() => {
+    setFrage(searchParams.get("question") || "");
+    setAntwort(searchParams.get("answer") || "");
+  }, [searchParams]);
 
   const handleSpeichern = () => {
     console.log("Gespeichert:");
