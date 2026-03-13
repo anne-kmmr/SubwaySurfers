@@ -1,5 +1,4 @@
-"use client";
-export const dynamic = "force-dynamic";
+"use client"
 
 import React, { useState, useEffect } from "react";
 import styles from "./editCardStyles.module.css";
