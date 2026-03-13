@@ -36,7 +36,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #ccc;
+  border: 1px solid var(--grey);
   border-radius: 12px;
   padding: 20px;
   box-sizing: border-box;
@@ -72,7 +72,7 @@
   transform: translateX(-50%);
   width: 70%;
   height: 2px;
-  background-color: #9fbbd4;
+  background-color: var(--blue);
 }
 
 .show-answer-btn,
@@ -95,7 +95,7 @@
   font-size: 1rem;
   border-radius: 8px;
   border: none;
-  background-color: #1982c4;
+  background-color: var(--blue);
   color: white;
   cursor: pointer;
   text-align: center;
@@ -116,9 +116,9 @@
 }
 
 .correct-btn {
-  background-color: #8ac926;
+  background-color: var(--green);
 }
 
 .wrong-btn {
-  background-color: #ff595e;
+  background-color: var(--red);
 }
