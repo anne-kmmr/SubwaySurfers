@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import styles from "./flashcardboxes.module.css";
 import Header from "../components/Header/Header";
