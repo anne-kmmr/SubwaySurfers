@@ -40,3 +40,7 @@ ______________________
 3. Überprüfung der Kompatibilität mit dem aktuellen Projektstand
 4. Erstellung eines Pull Requests
 5. Aufgetretene Probleme wurden behoben
+
+
+
+(Rest Anne am 13.03)

@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
-import EditCardsInner from "./EditCardsInner";
+import EditCardsInner from "./editCardsInner";
 
 export default function Page() {
   return (
