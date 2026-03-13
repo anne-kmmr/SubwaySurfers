@@ -20,7 +20,6 @@ const KartenBearbeiten: React.FC = () => {
     setAntwort(searchParams.get("answer") || "");
   }, [searchParams]);
 
-  // Schriftgröße automatisch anpassen (Frage)
   useEffect(() => {
     const length = frage.length;
 
@@ -30,7 +29,6 @@ const KartenBearbeiten: React.FC = () => {
     else setFrageFontSize(16);
   }, [frage]);
 
-  // Schriftgröße automatisch anpassen (Antwort)
   useEffect(() => {
     const length = antwort.length;
 
