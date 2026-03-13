@@ -17,18 +17,22 @@ export default function Home() {
 
     useEffect(() => {
         async function fetchVocab() {
-            const res = await fetch("/api/vocab");
-            const data = await res.json();
-            setCurrentVocab(data);
+            const res = await fetch("/api/vocab/");
+            const data: Vocab[] = await res.json();
+            if (data.length > 0) {
+                setCurrentVocab(data[0]); // erstes Element
+            }
         }
         fetchVocab();
     }, []);
 
     const handleFlipBack = async () => {
         setFlipped(false);
-        const res = await fetch("/api/vocab");
-        const data = await res.json();
-        setCurrentVocab(data);
+        const res = await fetch("/api/vocab/");
+        const data: Vocab[] = await res.json();
+        if (data.length > 0) {
+            setCurrentVocab(data[0]);
+        }
     };
 
     const CardFront = ({ onShowAnswer }: { onShowAnswer: () => void }) => (

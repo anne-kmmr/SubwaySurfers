@@ -30,10 +30,15 @@
 }
 
 .input {
-  font-size: 28px;
-  border: none;
-  background: transparent;
-  outline: none;
+  width: 100%;
+  min-height: 70px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  box-sizing: border-box;
+  resize: none;
+  word-break: break-word;
+  white-space: pre-wrap;
 }
 
 .buttonContainer {
