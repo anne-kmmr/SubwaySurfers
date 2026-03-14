@@ -1,72 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
-import styles from "./editCardStyles.module.css";
-import Header from "../components/Header/Header";
-import Link from "next/link";
+import { Suspense } from "react";
+import EditCardsInner from "./editCardsInner";
 
-const KartenBearbeiten: React.FC = () => {
-  const [frage, setFrage] = useState("2 + 2 = ?");
-  const [antwort, setAntwort] = useState("4");
-
-  const handleSpeichern = () => {
-    console.log("Gespeichert:");
-    console.log("Frage:", frage);
-    console.log("Antwort:", antwort);
-  };
-
-  const handleAbbrechen = () => {
-    console.log("Abgebrochen");
-  };
-
+export default function Page() {
   return (
-    <>
-      <Header title="Karte Bearbeiten" backHref="/" />
-      <main className={styles.wrapper}>
-        <div className={styles.content}>
-          <div className={styles.card}>
-            <h2>Frage:</h2>
-
-            <input
-              type="text"
-              className={styles.input}
-              value={frage}
-              onChange={(e) => setFrage(e.target.value)}
-            />
-          </div>
-
-          <div className={styles.card}>
-            <h2>Antwort:</h2>
-
-            <input
-              type="text"
-              className={styles.input}
-              value={antwort}
-              onChange={(e) => setAntwort(e.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className={styles.buttonContainer}>
-          <Link
-            className={styles.button}
-            href={"/cardsView"}
-            onClick={handleSpeichern}
-          >
-            Speichern
-          </Link>
-
-          <Link
-            className={styles.button}
-            href={"/cardsView"}
-            onClick={handleAbbrechen}
-          >
-            Abbrechen
-          </Link>
-        </div>
-      </main>
-    </>
+      <Suspense fallback={<div>Lädt…</div>}>
+        <EditCardsInner />
+      </Suspense>
   );
-};
-
-export default KartenBearbeiten;
+}

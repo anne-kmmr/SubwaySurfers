@@ -2,10 +2,11 @@
 
 import styles from "./Home.module.css";
 import Header from "./components/Header/Header";
+import IconButton from "./components/Icons/IconButton/IconButton";
+import EyeIcon from "@/app/components/Icons/EyeIcon/EyeIcon";
 import Link from "next/link";
 
 export default function HomePage() {
-
   const sets = [
     { id: "mathe", title: "Mathematik", count: 12, color: "#7ed957" },
     { id: "deutsch", title: "Deutsch", count: 8, color: "#ffd93d" },
@@ -14,44 +15,47 @@ export default function HomePage() {
 
   return (
     <>
-      <Header title="Home" backHref="/" />
+      <Header title="Home" />
+
       <main className={styles.container}>
-        {sets.map((set) => (
-          <div
-            key={set.id}
-            className={styles.card}
-            style={{ borderLeft: `10px solid ${set.color}` }}
-          >
-            <h2>{set.title}</h2>
-            <p>{set.count} Karten</p>
+        <div className={styles.newBoxContainer}>
+          <Link className={styles.newBoxLink} href="/createBoxView">+ Neue Karteikartenbox</Link>
+        </div>
 
-            <div className={styles.buttonRow}>
-              <Link
-                href={"/learningMode"}
-                className={styles.button}
-                style={{ backgroundColor: set.color, color: "white" }}
-              >
-                Lernen
-              </Link>
+        <div className={styles.cardsWrapper}>
+          {sets.map((set) => (
+            <div
+              key={set.id}
+              className={styles.card}
+              style={{ borderLeft: `10px solid ${set.color}` }}
+            >
+              <h2>{set.title}</h2>
+              <p>{set.count} Karten</p>
 
-              <Link
-                href={"/cardsView"}
-                className={styles.button}
-                style={{ backgroundColor: "#ff922b", color: "white" }}
-              >
-                ✏️
-              </Link>
+              <div className={styles.buttonRow}>
+                <Link
+                  href={"/learningMode"}
+                  className={styles.button}
+                  style={{ backgroundColor: set.color, color: "white" }}
+                >
+                  Lernen
+                </Link>
 
-              <Link
-                href={"/flashcardboxes"}
-                className={styles.button}
-                style={{ backgroundColor: "#845ef7", color: "white" }}
-              >
-                Karteikasten
-              </Link>
+                <IconButton href="/cardsView" label="Karten bearbeiten">
+                  <EyeIcon className={styles.EyeIcon} />
+                </IconButton>
+
+                <Link
+                  href={"/flashcardboxes"}
+                  className={styles.button}
+                  style={{ backgroundColor: "#845ef7", color: "white" }}
+                >
+                  Karteikasten
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </main>
     </>
   );

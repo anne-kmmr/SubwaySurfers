@@ -21,6 +21,8 @@
 
   --purple: #6a4c93;
 
+  --grey: #D3D3D3;
+
   --appMaxW: 430px;
 }
 
@@ -30,7 +32,6 @@
   margin: 0;
 }
 
-/* Removing this creates underlines  */
 a {
   color: inherit;
   text-decoration: none;

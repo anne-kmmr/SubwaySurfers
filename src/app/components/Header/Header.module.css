@@ -2,12 +2,9 @@
   position: sticky;
   top: 0;
   z-index: 10;
-
   width: 100%;
   background: var(--offwhiteblue);
-
   box-shadow: 0 0.9vw 2.2vw rgba(0, 0, 0, 0.12);
-
   padding: clamp(10px, 2vw, 14px) 0;
 }
 
@@ -16,7 +13,6 @@
   margin: 0 auto;
   max-width: var(--appMaxW);
   padding: 0 clamp(14px, 4vw, 22px);
-
   display: grid;
   grid-template-columns: 44px 1fr 44px;
   align-items: center;
@@ -26,22 +22,14 @@
 .headerTitle {
   margin: 0;
   text-align: center;
-  font-size: clamp(22px, 6vw, 34px);
   line-height: 1.05;
   letter-spacing: 0.02em;
 }
 
-.iconButton {
-  width: 44px;
-  height: 44px;
+.bigTitle {
+  font-size: clamp(24px, 6vw, 36px);
+}
 
-  color: var(--darkblue);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 12px;
-  background-color: var(--white);
-  box-shadow: 0 0.9vw 2.2vw rgba(0, 0, 0, 0.12);
-  font-size: 26px;
+.smallTitle {
+  font-size: clamp(18px, 4.5vw, 26px);
 }

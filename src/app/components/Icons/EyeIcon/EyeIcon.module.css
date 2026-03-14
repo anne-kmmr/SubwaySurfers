@@ -1,0 +1,16 @@
+.EyeIcon {
+  background-color: var(--red);
+  border-radius: 999px;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+}
+
+.EyeIcon svg {
+  width: 24px;
+  height: 24px;
+  stroke: white;
+}

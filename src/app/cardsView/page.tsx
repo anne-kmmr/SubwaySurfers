@@ -1,49 +1,74 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import styles from "./cardsView.module.css";
 import Header from "../components/Header/Header";
 import Link from "next/link";
 
-const content = " 2 + 2 = ?";
+export default function CardsView() {
+  const [cards, setCards] = useState<{ question: string; answer: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [flipped, setFlipped] = useState<boolean[]>([]); // welche Karten umgedreht sind
 
-export default function createBrowser() {
+  useEffect(() => {
+    async function fetchVocab() {
+      try {
+        const res = await fetch("/api/vocab"); // alle Vokabeln holen
+        const data = await res.json();
+        setCards(data);
+        setFlipped(new Array(data.length).fill(false)); // alle Karten starten ungedreht
+      } catch (err) {
+        console.error("Fehler beim Laden der Vokabeln:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchVocab();
+  }, []);
+
+  const toggleCard = (index: number) => {
+    setFlipped(prev => {
+      const newFlipped = [...prev];
+      newFlipped[index] = !newFlipped[index];
+      return newFlipped;
+    });
+  };
+
+  if (loading) {
+    return <p>Lädt...</p>;
+  }
+
   return (
-    <>
-      <Header title="Mathematik Karten" backHref="/" />
-      <main className={`${styles.app}`}>
-        <div>
-          <Link className={`${styles.button}`} href={"/editCards"}>
-            +Neue Karte
-          </Link>
-        </div>
-        <div className={`${styles.content}`}>
-          <li className={`${styles.li}`}>
-            {content}
-            <Link className={`${styles.button}`} href={"/editCards"}>
-              Bearbeiten
+      <>
+        <Header title="Alle Vokabelkarten" backHref="/" />
+        <main className={styles.app}>
+          <div className={styles.newCardContainer}>
+            <Link className={styles.button} href="/editCards">
+              + Neue Karte
             </Link>
-          </li>
-        </div>
-      </main>
-    </>
+          </div>
+          <ul className={styles.content}>
+            {cards.map((card, index) => (
+                <li
+                    key={index}
+                    className={styles.li}
+                    onClick={() => toggleCard(index)}
+                    style={{ cursor: "pointer" }}
+                >
+              <span>
+                {flipped[index] ? card.answer : card.question}
+              </span>
+                  <Link
+                      className={styles.button}
+                      href={`/editCards?question=${encodeURIComponent(card.question)}&answer=${encodeURIComponent(card.answer)}`}
+                  >
+                    Bearbeiten
+                  </Link>
+                </li>
+            ))}
+          </ul>
+        </main>
+      </>
   );
 }
-
-/* Future
-
-type Cards = {
-    value: String | Number;
-}
-
-function createCards() {
-//Future?
-}
-
-function putCardsInList(cards: Cards) {
-    const list = [];
-    const cardList = list.push(cards);
-    return (
-    <div>
-        <li>{cardList}</li>
-    </div>
-    );
-}
-*/
