@@ -1,0 +1,97 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  padding: 40px 20px;
+}
+
+.container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: var(--grey);
+}
+
+.cardsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+  gap: 20px;
+}
+
+.card {
+  width: 100%;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  background: white;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card h2 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.card p {
+  margin: 8px 0 15px 0;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.buttonRow button {
+  border: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.buttonRow button:hover {
+  transform: scale(1.05);
+}
+
+.button {
+  display: inline-flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 10px 18px;
+}
+
+.newBoxContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.newBoxLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  font-size: 1rem;
+  background-color: var(--blue);
+  color: var(--white);
+  text-decoration: none;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+

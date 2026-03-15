@@ -1,0 +1,35 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  background: var(--offwhiteblue);
+  box-shadow: 0 0.9vw 2.2vw rgba(0, 0, 0, 0.12);
+  padding: clamp(10px, 2vw, 14px) 0;
+}
+
+.headerContainer {
+  width: 100%;
+  margin: 0 auto;
+  max-width: var(--appMaxW);
+  padding: 0 clamp(14px, 4vw, 22px);
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  gap: 10px;
+}
+
+.headerTitle {
+  margin: 0;
+  text-align: center;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+}
+
+.bigTitle {
+  font-size: clamp(24px, 6vw, 36px);
+}
+
+.smallTitle {
+  font-size: clamp(18px, 4.5vw, 26px);
+}

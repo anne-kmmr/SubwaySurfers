@@ -1,0 +1,72 @@
+.wrapper {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.card {
+  width: 420px;
+  height: 220px;
+  background: var(--white);
+  border-radius: 16px;
+  border: 2px solid var(--grey);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  gap: 15px;
+}
+
+.card h2 {
+  font-size: 30px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.input {
+  width: 100%;
+  height: 110px;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: "Chewy", system-ui;
+  font-size: 22px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  resize: none;
+  word-break: break-word;
+  white-space: pre-wrap;
+  overflow-y: auto;
+}
+
+.buttonContainer {
+  margin-top: 130px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.button {
+  background: var(--blue);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 16px 32px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
