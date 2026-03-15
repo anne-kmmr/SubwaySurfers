@@ -32,10 +32,12 @@ export default function Header({ title, backHref }: HeaderProps) {
         <div className={styles.headerContainer}>
           {backHref ? (
               <IconButton href={backHref} label="Zurück">
-                <ArrowLeftIcon width={24} height={24} />
+                <ArrowLeftIcon width={24} height={24}/>
               </IconButton>
           ) : (
-              <div style={{ width: "44px" }} />
+              <div style={{width: "44px", display: "flex", justifyContent: "center"}}>
+                <SkateboardIcon width={24} height={24}/>
+              </div>
           )}
 
           <h1
@@ -46,7 +48,7 @@ export default function Header({ title, backHref }: HeaderProps) {
           </h1>
 
           <IconButton href={routes.settings} label="Einstellungen">
-            <SettingsIcon width={24} height={24} />
+            <SettingsIcon width={24} height={24}/>
           </IconButton>
         </div>
       </header>
@@ -70,6 +72,26 @@ function ArrowLeftIcon(props: React.SVGProps<SVGSVGElement>) {
       <path d="m12 19-7-7 7-7" />
       <path d="M19 12H5" />
     </svg>
+  );
+}
+
+function SkateboardIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+      <svg
+          className="SkateboardIcon"
+          xmlns="http://www.w3.org/2000/svg"
+          width={props.width || 24}
+          height={props.height || 24}
+          viewBox="0 0 10190 9330"
+          fill="none"
+          stroke="blue"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          {...props}
+      >
+        <path d="M1755 8460 c-3 -5 -21 -10 -39 -10 -32 0 -86 -39 -86 -62 0 -10 -25 -38 -34 -38 -3 0 -6 6 -6 14 0 8 -23 26 -52 40 -41 21 -67 26 -123 26 -66 0 -75 -2 -103 -30 -18 -16 -36 -30 -41 -30 -18 0 -61 -54 -61 -76 0 -12 -4 -26 -10 -29 ..."/>
+      </svg>
   );
 }
 

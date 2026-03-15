@@ -11,3 +11,7 @@
   box-shadow: 0 0.9vw 2.2vw rgba(0, 0, 0, 0.12);
   font-size: 26px;
 }
+
+.IconButton.EyeIcon {
+  background: transparent;
+}
