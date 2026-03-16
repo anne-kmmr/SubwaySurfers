@@ -2,7 +2,6 @@
 
 import styles from "./Home.module.css";
 import Header from "./components/Header/Header";
-import IconButton from "./components/Icons/IconButton/IconButton";
 import EyeIcon from "@/app/components/Icons/EyeIcon/EyeIcon";
 import Link from "next/link";
 
@@ -41,9 +40,12 @@ export default function HomePage() {
                   Lernen
                 </Link>
 
-                <IconButton href="/cardsView" label="Karten bearbeiten">
+                <Link
+                    href={"/cardsView"}
+                    style={{ backgroundColor: "transparent", color: "red" }}
+                >
                   <EyeIcon className={styles.EyeIcon} />
-                </IconButton>
+                </Link>
 
                 <Link
                   href={"/flashcardboxes"}
