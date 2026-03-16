@@ -47,7 +47,7 @@ export default function Header({ title, backHref }: HeaderProps) {
                     justifyContent: "center"
                   }}
               >
-                <SkateboardIcon width={24} height={24} />
+                <SkateboardIcon width={150} height={150} />
               </div>
           )}
 
