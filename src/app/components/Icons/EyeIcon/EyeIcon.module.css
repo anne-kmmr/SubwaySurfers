@@ -14,3 +14,7 @@
   height: 24px;
   stroke: white;
 }
+
+button.EyeIcon {
+  background-color: var(--red);
+}

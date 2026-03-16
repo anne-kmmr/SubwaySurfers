@@ -26,8 +26,8 @@
   padding: 25px;
   border-radius: 20px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  background: white;
   transition: transform 0.2s ease;
+  background-color: var(--white);
 }
 
 .card:hover {
@@ -58,6 +58,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  background-color: var(--white);
 }
 
 .buttonRow button:hover {
