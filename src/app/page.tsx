@@ -1,3 +1,6 @@
+// Idee von Luca
+// leichte Überarbeitung von Anne
+
 "use client";
 
 import styles from "./Home.module.css";
@@ -5,6 +8,7 @@ import Header from "./components/Header/Header";
 import EyeIcon from "@/app/components/Icons/EyeIcon/EyeIcon";
 import Link from "next/link";
 
+// definiert Packages zum Start, sollte später noch verändert werden
 export default function HomePage() {
   const sets = [
     { id: "mathe", title: "Mathematik", count: 12, color: "#7ed957" },
@@ -12,6 +16,7 @@ export default function HomePage() {
     { id: "englisch", title: "Englisch", count: 15, color: "#4dabf7" },
   ];
 
+  //returnt Inhalte mehrmals per map
   return (
     <>
       <Header title="Home" />

@@ -1,3 +1,6 @@
+// Datei durch Sandro und Anne
+
+// definiert den überall angezeigten Settingsbutton für den Header
 function SettingsIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
         <svg

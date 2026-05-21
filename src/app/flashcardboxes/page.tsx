@@ -1,3 +1,5 @@
+//Datei von Sandro
+
 "use client";
 
 import Link from "next/link";
@@ -11,6 +13,8 @@ type BoxCardProps = {
   href: string;
 };
 
+
+//Erstellt die Vokabelboxen
 function BoxCard({ title, count, variant, href }: BoxCardProps) {
   return (
     <Link
@@ -33,12 +37,14 @@ function BoxCard({ title, count, variant, href }: BoxCardProps) {
 }
 
 export default function BoxCardPage() {
+    //hier nur Beispielimplementierung von Sandro damals, bitte nachbessern!
   const counts = {
     toLearn: 8,
     inProgress: 4,
     learned: 3,
   };
 
+  //gibt die drei Boxen zurück
   return (
     <>
       <Header title="Lernboxen" backHref="/" />

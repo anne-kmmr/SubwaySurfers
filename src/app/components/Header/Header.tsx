@@ -1,3 +1,6 @@
+// Datei von Sandro
+// teilweise überarbeitet von Anne
+
 "use client"
 
 import styles from "./Header.module.css";
@@ -12,6 +15,7 @@ type HeaderProps = {
   backHref?: string;
 };
 
+// setzt die Anzahl der Zeilen
 export default function Header({ title, backHref }: HeaderProps) {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [twoLines, setTwoLines] = useState(false);
@@ -26,10 +30,12 @@ export default function Header({ title, backHref }: HeaderProps) {
     setTwoLines(lines > 1);
   }, [title]);
 
+  // Route für den Buttons für Settings
   const routes = {
     settings: "/settings",
   };
 
+  // returnt den Header mit Settingsbutton sowie Zurück-Button/Skateboard-Logo
   return (
       <header className={styles.header}>
         <div className={styles.headerContainer}>

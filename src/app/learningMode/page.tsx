@@ -1,9 +1,12 @@
+// Datei von Anne
+
 "use client";
 
 import { useEffect, useState } from "react";
 import styles from "./learningMode.module.css";
 import Header from "../components/Header/Header";
 
+// legt Parameter fest
 type Vocab = {
   id: number;
   question: string;
@@ -11,16 +14,18 @@ type Vocab = {
   set: string;
 };
 
+// definiert State der Vokabel
 export default function Home() {
   const [flipped, setFlipped] = useState(false);
   const [currentVocab, setCurrentVocab] = useState<Vocab | null>(null);
 
+  // holt Vokabel per API und fetcht/flipped sie
   useEffect(() => {
     async function fetchVocab() {
       const res = await fetch("/api/vocab/");
       const data: Vocab[] = await res.json();
       if (data.length > 0) {
-        setCurrentVocab(data[0]); // erstes Element
+        setCurrentVocab(data[0]);
       }
     }
     fetchVocab();
@@ -35,6 +40,7 @@ export default function Home() {
     }
   };
 
+  // returnt die bei Bedarf flippende Karte mit allen Buttons und Co.
   return (
     <>
       <Header title="Mathematik lernen" backHref="/" />

@@ -1,3 +1,6 @@
+// Datei von Anne
+// API zum Holen der Vokabeln aus der DB, welche im Ordner "Lib" sowie in ".env.local" definiert ist
+
 import { sql } from "@/lib/db";
 
 export async function GET(req: Request) {

@@ -1,3 +1,6 @@
+/* Globales CSS, alle weiteren .module.css-Dateien sind nur für die einzelnen Unterordner/Elemente */
+
+/* Global verwendete Farben, welche immer wiederverwendet werden können, bitte so beibehalten! */
 :root {
   --white: #ffffff;
   --offwhite: #f2f9ff;

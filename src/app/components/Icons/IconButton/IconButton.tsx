@@ -1,3 +1,5 @@
+// Datei von Sandro
+
 "use client";
 
 import Link from "next/link";
@@ -10,6 +12,8 @@ type IconButtonProps = {
   children: React.ReactNode;
 };
 
+/* definiert einen Standard-Button, der später mehrmals verwendet werden kann/wird -> verlinkt dauerhaft auf andere
+Dateien/Pfade */
 export default function IconButton({ href, label, children }: IconButtonProps) {
   return (
     <Link
