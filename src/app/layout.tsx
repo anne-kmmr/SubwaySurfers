@@ -15,6 +15,9 @@ const chewy = Chewy({
 export const metadata: Metadata = {
   title: "Flashcard App",
   description: "A Flashcard App for kids",
+  icons: {
+      icon: "/skateboard-App-Icon.svg",
+    },
 };
 
 // gibt Root-Layout heraus
