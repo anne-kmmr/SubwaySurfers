@@ -57,7 +57,7 @@ export default function LearningMode() {
     }
 
     try {
-      const res = await fetch("/api/vocab/status", {
+      const res = await fetch("/api/status", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
