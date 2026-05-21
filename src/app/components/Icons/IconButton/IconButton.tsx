@@ -1,28 +1,37 @@
-// Datei von Sandro
-
-"use client";
-
 import Link from "next/link";
 import styles from "./IconButton.module.css";
-import React from "react";
 
 type IconButtonProps = {
-  href: string;
+  href?: string;
+  onClick?: () => void;
   label: string;
   children: React.ReactNode;
 };
 
-/* definiert einen Standard-Button, der später mehrmals verwendet werden kann/wird -> verlinkt dauerhaft auf andere
-Dateien/Pfade */
-export default function IconButton({ href, label, children }: IconButtonProps) {
+export default function IconButton({
+  href,
+  onClick,
+  label,
+  children,
+}: IconButtonProps) {
+  // FALL 1: Link
+  if (href) {
+    return (
+      <Link href={href} className={styles.iconButton} aria-label={label}>
+        {children}
+      </Link>
+    );
+  }
+
+  // FALL 2: Button
   return (
-    <Link
-      href={href}
+    <button
+      type="button"
+      onClick={onClick}
       className={styles.iconButton}
       aria-label={label}
-      title={label}
     >
       {children}
-    </Link>
+    </button>
   );
 }
