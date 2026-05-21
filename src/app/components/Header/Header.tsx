@@ -8,7 +8,6 @@ import {useState, useRef, useEffect} from "react";
 import IconButton from "../Icons/IconButton/IconButton";
 import SkateboardIcon from "../Icons/SkateboardIcon/SkateboardIcon";
 import ArrowLeftIcon from "../Icons/ArrowLeftIcon/ArrowLeftIcon";
-import SettingsIcon from "../Icons/SettingsIcon/SettingsIcon";
 
 type HeaderProps = {
   title: string;
@@ -29,11 +28,6 @@ export default function Header({ title, backHref }: HeaderProps) {
 
     setTwoLines(lines > 1);
   }, [title]);
-
-  // Route für den Buttons für Settings
-  const routes = {
-    settings: "/settings",
-  };
 
   // returnt den Header mit Settingsbutton sowie Zurück-Button/Skateboard-Logo
   return (
@@ -63,10 +57,6 @@ export default function Header({ title, backHref }: HeaderProps) {
           >
             {title}
           </h1>
-
-          <IconButton href={routes.settings} label="Einstellungen">
-            <SettingsIcon width={24} height={24}/>
-          </IconButton>
         </div>
       </header>
   );
