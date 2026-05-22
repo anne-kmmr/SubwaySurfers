@@ -11,55 +11,21 @@ type Set = {
   title: string;
   count: number;
   color: string;
-  learnColor: string;
 };
 
 /* -----------------------------
-   CARD COLORS (inkl. rot + lila erlaubt)
+   SET COLORS
+   1. Set = Rot
+   2. Set = Gelb
+   3. Set = Grün
+   danach wiederholen
 ------------------------------ */
-const cardColors = [
+const setColors = [
   "--red",
-  "--lightred",
-  "--darkred",
   "--yellow",
-  "--lightyellow",
-  "--darkyellow",
-  "--blue",
-  "--lightblue",
-  "--darkblue",
   "--green",
-  "--lightgreen",
-  "--darkgreen",
-  "--purple",
 ];
 
-/* -----------------------------
-   LEARNING COLORS (kein rot, kein lila)
------------------------------- */
-const learningColors = [
-  "--blue",
-  "--lightblue",
-  "--darkblue",
-  "--green",
-  "--lightgreen",
-  "--darkgreen",
-  "--yellow",
-  "--lightyellow",
-  "--darkyellow",
-];
-
-/* -----------------------------
-   HELPERS
------------------------------- */
-const getRandomFrom = (arr: string[]) =>
-  arr[Math.floor(Math.random() * arr.length)];
-
-const getCardColor = () => getRandomFrom(cardColors);
-const getLearningColor = () => getRandomFrom(learningColors);
-
-/* -----------------------------
-   PAGE
------------------------------- */
 export default function HomePage() {
   const [sets, setSets] = useState<Set[]>([]);
 
@@ -73,10 +39,9 @@ export default function HomePage() {
           throw new Error("API hat kein Array zurückgegeben");
         }
 
-        const mapped: Set[] = data.map((set: any) => ({
+        const mapped: Set[] = data.map((set: any, index: number) => ({
           ...set,
-          color: getCardColor(),
-          learnColor: getLearningColor(),
+          color: setColors[index % setColors.length],
         }));
 
         setSets(mapped);
@@ -105,35 +70,40 @@ export default function HomePage() {
             <div
               key={set.id}
               className={styles.card}
-              style={{ borderLeft: `10px solid var(${set.color})` }}
+              style={{
+                borderLeft: `10px solid var(${set.color})`,
+              }}
             >
               <h2>{set.title}</h2>
               <p>{set.count} Karten</p>
 
               <div className={styles.buttonRow}>
-                {/* LERNEN BUTTON (ruhige Farben) */}
+                {/* Lernen = immer blau */}
                 <Link
-                  href={"/learningMode"}
+                  href="/learningMode"
                   className={styles.button}
                   style={{
-                    backgroundColor: `var(${set.learnColor})`,
+                    backgroundColor: "var(--blue)",
                     color: "white",
                   }}
                 >
                   Lernen
                 </Link>
 
-                {/* VIEW BUTTON */}
+                {/* Auge = immer rot */}
                 <Link
-                  href={"/cardsView"}
-                  style={{ backgroundColor: "transparent", color: "red" }}
+                  href="/cardsView"
+                  style={{
+                    backgroundColor: "transparent",
+                    color: "var(--red)",
+                  }}
                 >
                   <EyeIcon className={styles.EyeIcon} />
                 </Link>
 
-                {/* FIXE FARBE (stabil & neutral) */}
+                {/* Karteikasten = immer lila */}
                 <Link
-                  href={"/flashcardboxes"}
+                  href="/flashcardboxes"
                   className={styles.button}
                   style={{
                     backgroundColor: "var(--purple)",
