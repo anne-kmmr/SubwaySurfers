@@ -1,32 +1,21 @@
 import { NextResponse } from "next/server";
-import { Pool } from "pg";
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+import { sql } from "@/lib/db"; // <- so wie in deiner anderen API
 
 export async function GET() {
   try {
-    // Sets + Anzahl Vokabeln direkt in SQL berechnen
-    const result = await pool.query(`
+    const result = await sql`
       SELECT
-        s.id,
-        s.title,
-        s.color,
-        COUNT(v.id) AS count
-      FROM sets s
-      LEFT JOIN vocabularies v ON v.set_id = s.id
-      GROUP BY s.id
-      ORDER BY s.title;
-    `);
+        "set" AS title,
+        COUNT(*) AS count
+      FROM vocabulary
+      GROUP BY "set"
+      ORDER BY "set"
+    `;
 
-    const sets = result.rows.map((row) => ({
-      id: row.id,
+    const sets = result.map((row) => ({
+      id: row.title,
       title: row.title,
-      color: row.color,
+      color: "#845ef7",
       count: Number(row.count),
     }));
 

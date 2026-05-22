@@ -11,8 +11,55 @@ type Set = {
   title: string;
   count: number;
   color: string;
+  learnColor: string;
 };
 
+/* -----------------------------
+   CARD COLORS (inkl. rot + lila erlaubt)
+------------------------------ */
+const cardColors = [
+  "--red",
+  "--lightred",
+  "--darkred",
+  "--yellow",
+  "--lightyellow",
+  "--darkyellow",
+  "--blue",
+  "--lightblue",
+  "--darkblue",
+  "--green",
+  "--lightgreen",
+  "--darkgreen",
+  "--purple",
+];
+
+/* -----------------------------
+   LEARNING COLORS (kein rot, kein lila)
+------------------------------ */
+const learningColors = [
+  "--blue",
+  "--lightblue",
+  "--darkblue",
+  "--green",
+  "--lightgreen",
+  "--darkgreen",
+  "--yellow",
+  "--lightyellow",
+  "--darkyellow",
+];
+
+/* -----------------------------
+   HELPERS
+------------------------------ */
+const getRandomFrom = (arr: string[]) =>
+  arr[Math.floor(Math.random() * arr.length)];
+
+const getCardColor = () => getRandomFrom(cardColors);
+const getLearningColor = () => getRandomFrom(learningColors);
+
+/* -----------------------------
+   PAGE
+------------------------------ */
 export default function HomePage() {
   const [sets, setSets] = useState<Set[]>([]);
 
@@ -26,7 +73,13 @@ export default function HomePage() {
           throw new Error("API hat kein Array zurückgegeben");
         }
 
-        setSets(data);
+        const mapped: Set[] = data.map((set: any) => ({
+          ...set,
+          color: getCardColor(),
+          learnColor: getLearningColor(),
+        }));
+
+        setSets(mapped);
       } catch (err) {
         console.error("Fetch error:", err);
         setSets([]);
@@ -52,20 +105,25 @@ export default function HomePage() {
             <div
               key={set.id}
               className={styles.card}
-              style={{ borderLeft: `10px solid ${set.color}` }}
+              style={{ borderLeft: `10px solid var(${set.color})` }}
             >
               <h2>{set.title}</h2>
               <p>{set.count} Karten</p>
 
               <div className={styles.buttonRow}>
+                {/* LERNEN BUTTON (ruhige Farben) */}
                 <Link
                   href={"/learningMode"}
                   className={styles.button}
-                  style={{ backgroundColor: set.color, color: "white" }}
+                  style={{
+                    backgroundColor: `var(${set.learnColor})`,
+                    color: "white",
+                  }}
                 >
                   Lernen
                 </Link>
 
+                {/* VIEW BUTTON */}
                 <Link
                   href={"/cardsView"}
                   style={{ backgroundColor: "transparent", color: "red" }}
@@ -73,10 +131,14 @@ export default function HomePage() {
                   <EyeIcon className={styles.EyeIcon} />
                 </Link>
 
+                {/* FIXE FARBE (stabil & neutral) */}
                 <Link
                   href={"/flashcardboxes"}
                   className={styles.button}
-                  style={{ backgroundColor: "#845ef7", color: "white" }}
+                  style={{
+                    backgroundColor: "var(--purple)",
+                    color: "white",
+                  }}
                 >
                   Karteikasten
                 </Link>
