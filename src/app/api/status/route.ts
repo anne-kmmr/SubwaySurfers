@@ -1,5 +1,9 @@
+// Datei von Anne
+// API, welche den status der Vokabelkarten abfragen oder ändern kann
+
 import { sql } from "@/lib/db";
 
+// Daten holen
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -13,11 +17,13 @@ export async function POST(req: Request) {
       RETURNING *
     `;
 
+    // Auf JSON-Response warten
     return Response.json({
       success: true,
       updated: result,
     });
 
+  //Fehlerbehandlung
   } catch (err) {
     console.error("API ERROR:", err);
 

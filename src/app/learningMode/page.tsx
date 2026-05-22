@@ -1,3 +1,5 @@
+// Implementierung durch Anne
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -12,6 +14,7 @@ type Vocab = {
   status?: string;
 };
 
+// Definition State
 export default function LearningMode() {
   const [flipped, setFlipped] = useState(false);
   const [currentVocab, setCurrentVocab] = useState<Vocab | null>(null);
@@ -22,6 +25,7 @@ export default function LearningMode() {
     loadVocab();
   }, []);
 
+  //Sucht Vokabeln mittels API und gibt sie mittels JSON zurück
   const loadVocab = async () => {
     try {
       const res = await fetch("/api/vocab");
@@ -84,6 +88,7 @@ export default function LearningMode() {
 
   if (loading) return <p>Lade...</p>;
 
+  // returnt die fertige Seite
   return (
     <>
       <Header title="Mathematik lernen" backHref="/" />
@@ -92,7 +97,6 @@ export default function LearningMode() {
         <div className={styles["card-container"]}>
           <div className={`${styles.card} ${flipped ? styles.cardFlipped : ""}`}>
 
-            {/* FRONT */}
             <div className={styles["card-front"]}>
               <div className={styles.textOutputDiv}>
                 {currentVocab?.question ?? "Keine Vokabel"}
@@ -109,7 +113,6 @@ export default function LearningMode() {
               </button>
             </div>
 
-            {/* BACK */}
             <div className={styles["card-back"]}>
               <div className={styles.textOutputDiv}>
                 {currentVocab?.answer ?? "Keine Vokabel"}

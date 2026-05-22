@@ -1,3 +1,6 @@
+// Idee von Sandro
+// spätere Überarbeitung von Anne
+
 "use client";
 
 import styles from "./Header.module.css";
@@ -12,6 +15,7 @@ type HeaderProps = {
   backHref?: string;
 };
 
+// nutzt Router für das "Zurück" gehen und legt die Lines fest
 export default function Header({ title, backHref }: HeaderProps) {
   const router = useRouter();
 
@@ -28,11 +32,11 @@ export default function Header({ title, backHref }: HeaderProps) {
     setTwoLines(lines > 1);
   }, [title]);
 
+  //returnt den verwendungsfertigen Header
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
 
-        {/* BACK BUTTON */}
         {backHref ? (
           <IconButton
             label="Zurück"
@@ -54,7 +58,6 @@ export default function Header({ title, backHref }: HeaderProps) {
           </div>
         )}
 
-        {/* TITLE */}
         <h1
           ref={titleRef}
           className={`${styles.headerTitle} ${

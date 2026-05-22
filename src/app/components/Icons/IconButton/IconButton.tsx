@@ -1,3 +1,5 @@
+// Implementierung durch Anne
+
 import Link from "next/link";
 import styles from "./IconButton.module.css";
 
@@ -8,13 +10,13 @@ type IconButtonProps = {
   children: React.ReactNode;
 };
 
+// legt Standard für den Button mit Link und ohne fest
 export default function IconButton({
   href,
   onClick,
   label,
   children,
 }: IconButtonProps) {
-  // FALL 1: Link
   if (href) {
     return (
       <Link href={href} className={styles.iconButton} aria-label={label}>
@@ -23,7 +25,7 @@ export default function IconButton({
     );
   }
 
-  // FALL 2: Button
+  // returnt Button
   return (
     <button
       type="button"

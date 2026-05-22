@@ -1,3 +1,6 @@
+// Ursprüngliche Implementation und Idee durch Luca
+// Überarbeitung durch Anne
+
 "use client";
 
 import styles from "./Home.module.css";
@@ -13,19 +16,14 @@ type Set = {
   color: string;
 };
 
-/* -----------------------------
-   SET COLORS
-   1. Set = Rot
-   2. Set = Gelb
-   3. Set = Grün
-   danach wiederholen
------------------------------- */
+// setzt erlaubte Farben
 const setColors = [
   "--red",
   "--yellow",
   "--green",
 ];
 
+// sucht nach "set" in der DB
 export default function HomePage() {
   const [sets, setSets] = useState<Set[]>([]);
 
@@ -54,6 +52,7 @@ export default function HomePage() {
     fetchSets();
   }, []);
 
+  // returnt die Seite mit den gefundenen Sets
   return (
     <>
       <Header title="Home" />
@@ -78,7 +77,6 @@ export default function HomePage() {
               <p>{set.count} Karten</p>
 
               <div className={styles.buttonRow}>
-                {/* Lernen = immer blau */}
                 <Link
                   href="/learningMode"
                   className={styles.button}
@@ -90,7 +88,6 @@ export default function HomePage() {
                   Lernen
                 </Link>
 
-                {/* Auge = immer rot */}
                 <Link
                   href="/cardsView"
                   style={{
@@ -101,7 +98,6 @@ export default function HomePage() {
                   <EyeIcon className={styles.EyeIcon} />
                 </Link>
 
-                {/* Karteikasten = immer lila */}
                 <Link
                   href="/flashcardboxes"
                   className={styles.button}
