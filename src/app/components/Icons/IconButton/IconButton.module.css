@@ -5,13 +5,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
+  border: none;
+  outline: none;
   border-radius: 12px;
   background-color: var(--white);
-  box-shadow: 0 0.9vw 2.2vw rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
   font-size: 26px;
-}
-
-.IconButton.EyeIcon {
-  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }

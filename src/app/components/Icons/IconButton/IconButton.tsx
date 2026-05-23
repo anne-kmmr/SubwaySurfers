@@ -1,24 +1,39 @@
-"use client";
+// Implementierung durch Anne
 
 import Link from "next/link";
 import styles from "./IconButton.module.css";
-import React from "react";
 
 type IconButtonProps = {
-  href: string;
+  href?: string;
+  onClick?: () => void;
   label: string;
   children: React.ReactNode;
 };
 
-export default function IconButton({ href, label, children }: IconButtonProps) {
+// legt Standard für den Button mit Link und ohne fest
+export default function IconButton({
+  href,
+  onClick,
+  label,
+  children,
+}: IconButtonProps) {
+  if (href) {
+    return (
+      <Link href={href} className={styles.iconButton} aria-label={label}>
+        {children}
+      </Link>
+    );
+  }
+
+  // returnt Button
   return (
-    <Link
-      href={href}
+    <button
+      type="button"
+      onClick={onClick}
       className={styles.iconButton}
       aria-label={label}
-      title={label}
     >
       {children}
-    </Link>
+    </button>
   );
 }

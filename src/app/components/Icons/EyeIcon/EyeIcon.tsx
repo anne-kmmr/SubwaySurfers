@@ -1,8 +1,12 @@
+// Idee von Luca
+// spätere, verbesserte Einbindung und CSS durch Anne
+
 "use client";
 
 import React from "react";
 import styles from "./EyeIcon.module.css";
 
+// definiert das Icon, Wiedergabe mit eigenem CSS auf der Home-Seite
 export default function EyeIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
         <div className={styles.EyeIcon}>

@@ -1,6 +1,0 @@
-.content {
-  flex-direction: column;
-  justify-content: space-between;
-  gap: min(8vw, 40px);
-  padding: min(8vw, 40px) min(6vw, 24px);
-}

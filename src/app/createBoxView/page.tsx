@@ -1,3 +1,5 @@
+// Datei von Anne
+
 "use client";
 
 import React, { useState } from "react";
@@ -5,10 +7,12 @@ import styles from "./createBoxView.module.css";
 import Header from "../components/Header/Header";
 import Link from "next/link";
 
+// Setzt Platzhalter für Eingabefeld und co.
 export default function CreateBoxView() {
   const [titel, setTitel] = useState("");
   const [placeholder, setPlaceholder] = useState("Wie soll dein Kästchen heißen?");
 
+  // Loggt mit Handle (Prozess-ID) die Eingaben des Nutzers
   const handleSpeichern = () => {
     console.log("Neuer Karteikasten erstellt:");
     console.log("Titel:", titel);
@@ -19,6 +23,7 @@ export default function CreateBoxView() {
     console.log("Erstellung abgebrochen");
   };
 
+  //returnt die Seite mit Platzhaltern und allem drum und dran
   return (
       <>
         <Header title="Neue Karteikastenbox" backHref="/" />

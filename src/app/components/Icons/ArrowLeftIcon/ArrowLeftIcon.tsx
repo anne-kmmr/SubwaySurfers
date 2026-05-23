@@ -1,5 +1,8 @@
+// Datei von Sandro
+
 import React from "react";
 
+// definiert den Pfeil in seiner Größe und returnet ihn, wird später auf dem IconButton angezeigt
 function ArrowLeftIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
         <svg

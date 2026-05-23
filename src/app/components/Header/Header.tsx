@@ -1,18 +1,24 @@
-"use client"
+// Idee von Sandro
+// spätere Überarbeitung von Anne
+
+"use client";
 
 import styles from "./Header.module.css";
-import {useState, useRef, useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import IconButton from "../Icons/IconButton/IconButton";
 import SkateboardIcon from "../Icons/SkateboardIcon/SkateboardIcon";
 import ArrowLeftIcon from "../Icons/ArrowLeftIcon/ArrowLeftIcon";
-import SettingsIcon from "../Icons/SettingsIcon/SettingsIcon";
 
 type HeaderProps = {
   title: string;
   backHref?: string;
 };
 
+// nutzt Router für das "Zurück" gehen und legt die Lines fest
 export default function Header({ title, backHref }: HeaderProps) {
+  const router = useRouter();
+
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [twoLines, setTwoLines] = useState(false);
 
@@ -26,43 +32,42 @@ export default function Header({ title, backHref }: HeaderProps) {
     setTwoLines(lines > 1);
   }, [title]);
 
-  const routes = {
-    settings: "/settings",
-  };
-
+  //returnt den verwendungsfertigen Header
   return (
-      <header className={styles.header}>
-        <div className={styles.headerContainer}>
-          {backHref ? (
-              <IconButton href={backHref} label="Zurück">
-                <ArrowLeftIcon width={24} height={24}/>
-              </IconButton>
-          ) : (
-              <div
-                  style={{
-                    width: "44px",
-                    height: "44px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center"
-                  }}
-              >
-                <SkateboardIcon width={150} height={150} />
-              </div>
-          )}
+    <header className={styles.header}>
+      <div className={styles.headerContainer}>
 
-          <h1
-              ref={titleRef}
-              className={`${styles.headerTitle} ${twoLines ? styles.smallTitle : styles.bigTitle}`}
+        {backHref ? (
+          <IconButton
+            label="Zurück"
+            onClick={() => router.back()}
           >
-            {title}
-          </h1>
-
-          <IconButton href={routes.settings} label="Einstellungen">
-            <SettingsIcon width={24} height={24}/>
+            <ArrowLeftIcon width={24} height={24} />
           </IconButton>
-        </div>
-      </header>
+        ) : (
+          <div
+            style={{
+              width: "44px",
+              height: "44px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <SkateboardIcon width={150} height={150} />
+          </div>
+        )}
+
+        <h1
+          ref={titleRef}
+          className={`${styles.headerTitle} ${
+            twoLines ? styles.smallTitle : styles.bigTitle
+          }`}
+        >
+          {title}
+        </h1>
+
+      </div>
+    </header>
   );
 }
-

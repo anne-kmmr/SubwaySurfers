@@ -1,3 +1,6 @@
+// Ursprüngliche Systematik von Adam
+// Aussehen und Funktionen überarbeitet von Anne
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -5,11 +8,13 @@ import styles from "./cardsView.module.css";
 import Header from "../components/Header/Header";
 import Link from "next/link";
 
+// definiert die States der Karten
 export default function CardsView() {
   const [cards, setCards] = useState<{ question: string; answer: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [flipped, setFlipped] = useState<boolean[]>([]); // welche Karten umgedreht sind
 
+  // Zeigt die Karten so an, dass nur die Vorderseite auf der Übersicht zu sehen ist, Daten kommen per API
   useEffect(() => {
     async function fetchVocab() {
       try {
@@ -27,6 +32,7 @@ export default function CardsView() {
     fetchVocab();
   }, []);
 
+  // Setzt Index für den geflippten Zustand
   const toggleCard = (index: number) => {
     setFlipped(prev => {
       const newFlipped = [...prev];
@@ -35,10 +41,12 @@ export default function CardsView() {
     });
   };
 
+  // Message, falls die Datenübertragung länger dauert, Laden sollte optimiert werden
   if (loading) {
     return <p>Lädt...</p>;
   }
 
+  // returnt die Elemente der Seite und zeigt mit map alle Elemente an
   return (
       <>
         <Header title="Alle Vokabelkarten" backHref="/" />

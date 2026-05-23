@@ -1,6 +1,9 @@
+// Datei von Anne
+
 import React from "react";
 import styles from "./SkateboardIcon.module.css";
 
+// definiert das Icon der Anwendung, welches jedoch nur auf dem Homescreen im Header zu sehen ist
 function SkateboardIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
         <svg

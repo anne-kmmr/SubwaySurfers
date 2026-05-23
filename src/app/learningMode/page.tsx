@@ -1,3 +1,5 @@
+// Implementierung durch Anne
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -9,46 +11,99 @@ type Vocab = {
   question: string;
   answer: string;
   set: string;
+  status?: string;
 };
 
-export default function Home() {
+// Definition State
+export default function LearningMode() {
   const [flipped, setFlipped] = useState(false);
   const [currentVocab, setCurrentVocab] = useState<Vocab | null>(null);
+  const [loading, setLoading] = useState(true);
 
+  // Vokabel laden
   useEffect(() => {
-    async function fetchVocab() {
-      const res = await fetch("/api/vocab/");
-      const data: Vocab[] = await res.json();
-      if (data.length > 0) {
-        setCurrentVocab(data[0]); // erstes Element
-      }
-    }
-    fetchVocab();
+    loadVocab();
   }, []);
 
-  const handleFlipBack = async () => {
-    setFlipped(false);
-    const res = await fetch("/api/vocab/");
-    const data: Vocab[] = await res.json();
-    if (data.length > 0) {
-      setTimeout(() => setCurrentVocab(data[0]), 150);
+  //Sucht Vokabeln mittels API und gibt sie mittels JSON zurück
+  const loadVocab = async () => {
+    try {
+      const res = await fetch("/api/vocab");
+      const data: Vocab[] = await res.json();
+
+      console.log("VOCAB DATA:", data);
+
+      if (data.length > 0) {
+        setCurrentVocab(data[0]);
+      } else {
+        setCurrentVocab(null);
+      }
+    } catch (err) {
+      console.error("Fehler beim Laden der Vokabeln:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
+  // Status speichern
+  const updateStatus = async (status: "correct" | "wrong") => {
+    console.log("UPDATE STATUS CLICKED:", status);
+    console.log("CURRENT VOCAB:", currentVocab);
+
+    if (!currentVocab) {
+      console.error("Keine Vokabel geladen");
+      return;
+    }
+
+    if (typeof currentVocab.id !== "number") {
+      console.error("Ungültige ID:", currentVocab.id);
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/status", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: currentVocab.id,
+          status,
+        }),
+      });
+
+      const result = await res.json();
+      console.log("API RESPONSE:", result);
+    } catch (err) {
+      console.error("Fehler beim Status-Update:", err);
+    }
+  };
+
+  // nächste Karte laden
+  const nextCard = async () => {
+    setFlipped(false);
+
+    await loadVocab();
+  };
+
+  if (loading) return <p>Lade...</p>;
+
+  // returnt die fertige Seite
   return (
     <>
       <Header title="Mathematik lernen" backHref="/" />
 
       <main className={styles.content}>
         <div className={styles["card-container"]}>
-          <div
-            className={`${styles.card} ${flipped ? styles.cardFlipped : ""}`}
-          >
+          <div className={`${styles.card} ${flipped ? styles.cardFlipped : ""}`}>
+
             <div className={styles["card-front"]}>
               <div className={styles.textOutputDiv}>
-                {currentVocab ? currentVocab.question : "Lade..."}
+                {currentVocab?.question ?? "Keine Vokabel"}
               </div>
+
               <div className={styles["answer-line"]}></div>
+
               <button
                 type="button"
                 className={styles["show-answer-btn"]}
@@ -60,26 +115,36 @@ export default function Home() {
 
             <div className={styles["card-back"]}>
               <div className={styles.textOutputDiv}>
-                {currentVocab ? currentVocab.answer : "Lade..."}
+                {currentVocab?.answer ?? "Keine Vokabel"}
               </div>
+
               <div className={styles["answer-line"]}></div>
+
               <div className={styles["answer-btns"]}>
                 <button
                   type="button"
                   className={styles["correct-btn"]}
-                  onClick={handleFlipBack}
+                  onClick={async () => {
+                    await updateStatus("correct");
+                    await nextCard();
+                  }}
                 >
                   Richtig
                 </button>
+
                 <button
                   type="button"
                   className={styles["wrong-btn"]}
-                  onClick={handleFlipBack}
+                  onClick={async () => {
+                    await updateStatus("wrong");
+                    await nextCard();
+                  }}
                 >
                   Falsch
                 </button>
               </div>
             </div>
+
           </div>
         </div>
       </main>
