@@ -1,0 +1,67 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.popup {
+  background: white;
+  padding: 22px 26px;
+  border-radius: 12px;
+  min-width: 240px;
+  max-width: 340px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: pop 0.15s ease-out;
+}
+
+.message {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.button {
+  flex: 1;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.confirm {
+  background: var(--blue);
+  color: white;
+}
+
+.cancel {
+  background: var(--grey);
+  color: white;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from "react";
 import styles from "./editCardStyles.module.css";
 import Header from "../components/Header/Header";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+
+import PopupAdd from "../components/Popup/PopupAdd";
+import PopupConfirm from "../components/Popup/PopupConfirm";
 
 const EditCardsInner: React.FC = () => {
     const searchParams = useSearchParams();
@@ -14,6 +16,14 @@ const EditCardsInner: React.FC = () => {
 
     const [frageFontSize, setFrageFontSize] = useState(20);
     const [antwortFontSize, setAntwortFontSize] = useState(20);
+
+    // Popup State
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupMessage, setPopupMessage] = useState("");
+    const [popupMode, setPopupMode] = useState<"add" | "confirm">("add");
+
+    const isEditMode =
+        Boolean(searchParams.get("question") || searchParams.get("answer"));
 
     useEffect(() => {
         setFrage(searchParams.get("question") || "");
@@ -38,10 +48,35 @@ const EditCardsInner: React.FC = () => {
         else setAntwortFontSize(16);
     }, [antwort]);
 
-    const handleSpeichern = () => {
+    // echte Speicherlogik
+    const saveCard = () => {
         console.log("Gespeichert:");
         console.log("Frage:", frage);
         console.log("Antwort:", antwort);
+
+        setPopupMode("add");
+        setPopupMessage(
+            isEditMode
+                ? "Änderung erfolgreich gespeichert!"
+                : "Karte erfolgreich erstellt!"
+        );
+
+        setShowPopup(true);
+
+        setTimeout(() => {
+            setShowPopup(false);
+        }, 1500);
+    };
+
+    // Klick auf Speichern
+    const handleSpeichern = () => {
+        if (isEditMode) {
+            setPopupMode("confirm");
+            setPopupMessage("Änderungen übernehmen?");
+            setShowPopup(true);
+        } else {
+            saveCard();
+        }
     };
 
     const handleAbbrechen = () => {
@@ -57,6 +92,28 @@ const EditCardsInner: React.FC = () => {
     return (
         <>
             <Header title="Karte Bearbeiten" backHref="/" />
+
+            {/* POPUP ADD */}
+            {popupMode === "add" && (
+                <PopupAdd
+                    open={showPopup}
+                    message={popupMessage}
+                    onClose={() => setShowPopup(false)}
+                />
+            )}
+
+            {/* POPUP CONFIRM */}
+            {popupMode === "confirm" && (
+                <PopupConfirm
+                    open={showPopup}
+                    message={popupMessage}
+                    onCancel={() => setShowPopup(false)}
+                    onConfirm={() => {
+                        setShowPopup(false);
+                        saveCard();
+                    }}
+                />
+            )}
 
             <main className={styles.wrapper}>
                 <div className={styles.content}>
@@ -86,21 +143,19 @@ const EditCardsInner: React.FC = () => {
                 </div>
 
                 <div className={styles.buttonContainer}>
-                    <Link
+                    <button
                         className={styles.button}
-                        href="/cardsView"
                         onClick={handleSpeichern}
                     >
                         Speichern
-                    </Link>
+                    </button>
 
-                    <Link
+                    <button
                         className={styles.button}
-                        href="/cardsView"
                         onClick={handleAbbrechen}
                     >
                         Abbrechen
-                    </Link>
+                    </button>
                 </div>
             </main>
         </>
