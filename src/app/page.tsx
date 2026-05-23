@@ -16,14 +16,10 @@ type Set = {
   color: string;
 };
 
-// setzt erlaubte Farben
-const setColors = [
-  "--red",
-  "--yellow",
-  "--green",
-];
+// Verwendbare Farben
+const setColors = ["--green", "--yellow", "--blue"];
 
-// sucht nach "set" in der DB
+// export function für den fetch per API und die Rückgabe der Daten
 export default function HomePage() {
   const [sets, setSets] = useState<Set[]>([]);
 
@@ -52,7 +48,7 @@ export default function HomePage() {
     fetchSets();
   }, []);
 
-  // returnt die Seite mit den gefundenen Sets
+// returned Homeseite und mappt dabei die Einträge, je nach Zustand der Datenbank
   return (
     <>
       <Header title="Home" />
@@ -81,7 +77,7 @@ export default function HomePage() {
                   href="/learningMode"
                   className={styles.button}
                   style={{
-                    backgroundColor: "var(--blue)",
+                    backgroundColor: `var(${set.color})`,
                     color: "white",
                   }}
                 >
@@ -90,9 +86,12 @@ export default function HomePage() {
 
                 <Link
                   href="/cardsView"
+                  className={styles.button}
                   style={{
-                    backgroundColor: "transparent",
-                    color: "var(--red)",
+                    backgroundColor: "var(--red)",
+                    color: "white",
+                    padding: "10px",
+                    minWidth: "50px",
                   }}
                 >
                   <EyeIcon className={styles.EyeIcon} />
