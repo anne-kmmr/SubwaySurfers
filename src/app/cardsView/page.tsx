@@ -43,7 +43,15 @@ export default function CardsView() {
 
   // Message, falls die Datenübertragung länger dauert, Laden sollte optimiert werden
   if (loading) {
-    return <p>Lädt...</p>;
+    return (
+      <>
+        <Header title="Alle Vokabelkarten" backHref="/" />
+
+        <main className={styles.app}>
+          <div className={styles.loading}>Lade...</div>
+        </main>
+      </>
+    );
   }
 
   // returnt die Elemente der Seite und zeigt mit map alle Elemente an

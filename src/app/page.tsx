@@ -22,6 +22,7 @@ const setColors = ["--green", "--yellow", "--blue"];
 // export function für den fetch per API und die Rückgabe der Daten
 export default function HomePage() {
   const [sets, setSets] = useState<Set[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSets = async () => {
@@ -42,13 +43,28 @@ export default function HomePage() {
       } catch (err) {
         console.error("Fetch error:", err);
         setSets([]);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchSets();
   }, []);
 
-// returned Homeseite und mappt dabei die Einträge, je nach Zustand der Datenbank
+  // Loading Zustand der Startseite
+  if (loading) {
+    return (
+      <>
+        <Header title="Home" />
+
+        <main className={styles.container}>
+          <div className={styles.loading}>Lade...</div>
+        </main>
+      </>
+    );
+  }
+
+  // returned Homeseite und mappt dabei die Einträge, je nach Zustand der Datenbank
   return (
     <>
       <Header title="Home" />

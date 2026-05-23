@@ -86,7 +86,17 @@ export default function LearningMode() {
     await loadVocab();
   };
 
-  if (loading) return <p>Lade...</p>;
+  if (loading) {
+    return (
+      <>
+        <Header title="Mathematik lernen" backHref="/" />
+
+        <main className={styles.content}>
+          <div className={styles.loading}>Lade...</div>
+        </main>
+      </>
+    );
+  }
 
   // returnt die fertige Seite
   return (

@@ -126,3 +126,14 @@
 .wrong-btn {
   background-color: var(--red);
 }
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 340px; /* Höhe der Karte */
+  width: 90%;
+  max-width: 360px;
+  font-size: 1.5rem;
+  text-align: center;
+}
