@@ -55,6 +55,7 @@
   padding: 10px 18px;
   font-size: 1rem;
   font-weight: 600;
+  font-family: "Chewy", system-ui;
   border-radius: 8px;
   text-decoration: none;
   color: var(--white);

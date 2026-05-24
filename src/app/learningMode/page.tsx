@@ -5,7 +5,6 @@
 import { useEffect, useState } from "react";
 import styles from "./learningMode.module.css";
 import Header from "../components/Header/Header";
-import Loading from "@/app/components/Loading/Loading";
 
 type Vocab = {
   id: number;
@@ -84,23 +83,10 @@ export default function LearningMode() {
     await loadVocab();
   };
 
-  // Laden der Seite
-  if (loading) {
-    return (
-      <>
-        <Header title="Mathematik lernen" backHref="/" />
-
-        <main className={styles.content}>
-          <Loading />
-        </main>
-      </>
-    );
-  }
-
   // returnt die fertige Seite
   return (
     <>
-      <Header title="Mathematik lernen" backHref="/" />
+      <Header title="{} lernen" backHref="/" />
 
       <main className={styles.content}>
         <div className={styles["card-container"]}>
