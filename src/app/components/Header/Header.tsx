@@ -1,10 +1,9 @@
-// Idee von Sandro
+// Idee und erste Implementierund von Sandro
 // spätere Überarbeitung von Anne
 
 "use client";
 
 import styles from "./Header.module.css";
-import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import IconButton from "../Icons/IconButton/IconButton";
 import SkateboardIcon from "../Icons/SkateboardIcon/SkateboardIcon";
@@ -15,58 +14,27 @@ type HeaderProps = {
   backHref?: string;
 };
 
-// nutzt Router für das "Zurück" gehen und legt die Lines fest
+// default für Header mit Buttons/Icons und Titel
 export default function Header({ title, backHref }: HeaderProps) {
   const router = useRouter();
 
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const [twoLines, setTwoLines] = useState(false);
-
-  useEffect(() => {
-    const el = titleRef.current;
-    if (!el) return;
-
-    const lineHeight = parseFloat(getComputedStyle(el).lineHeight);
-    const lines = Math.round(el.clientHeight / lineHeight);
-
-    setTwoLines(lines > 1);
-  }, [title]);
-
-  //returnt den verwendungsfertigen Header
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
 
-        {backHref ? (
-          <IconButton
-            label="Zurück"
-            onClick={() => router.back()}
-          >
-            <ArrowLeftIcon width={24} height={24} />
-          </IconButton>
-        ) : (
-          <div
-            style={{
-              width: "44px",
-              height: "44px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <SkateboardIcon width={150} height={150} />
-          </div>
-        )}
+        <div className={styles.left}>
+          {backHref ? (
+            <IconButton label="Zurück" onClick={() => router.back()}>
+              <ArrowLeftIcon width={24} height={24} />
+            </IconButton>
+          ) : (
+            <SkateboardIcon width={34} height={34} />
+          )}
+        </div>
 
-        <h1
-          ref={titleRef}
-          className={`${styles.headerTitle} ${
-            twoLines ? styles.smallTitle : styles.bigTitle
-          }`}
-        >
-          {title}
-        </h1>
+        <h1 className={styles.headerTitle}>{title}</h1>
 
+        <div className={styles.rightSpacer} />
       </div>
     </header>
   );

@@ -5,6 +5,7 @@
 import { useEffect, useState } from "react";
 import styles from "./learningMode.module.css";
 import Header from "../components/Header/Header";
+import Loading from "@/app/components/Loading/Loading";
 
 type Vocab = {
   id: number;
@@ -25,9 +26,11 @@ export default function LearningMode() {
     loadVocab();
   }, []);
 
-  //Sucht Vokabeln mittels API und gibt sie mittels JSON zurück
+  // Sucht Vokabeln mittels API und gibt sie mittels JSON zurück
   const loadVocab = async () => {
     try {
+      setLoading(true);
+
       const res = await fetch("/api/vocab");
       const data: Vocab[] = await res.json();
 
@@ -40,6 +43,7 @@ export default function LearningMode() {
       }
     } catch (err) {
       console.error("Fehler beim Laden der Vokabeln:", err);
+      setCurrentVocab(null);
     } finally {
       setLoading(false);
     }
@@ -52,11 +56,6 @@ export default function LearningMode() {
 
     if (!currentVocab) {
       console.error("Keine Vokabel geladen");
-      return;
-    }
-
-    if (typeof currentVocab.id !== "number") {
-      console.error("Ungültige ID:", currentVocab.id);
       return;
     }
 
@@ -82,11 +81,21 @@ export default function LearningMode() {
   // nächste Karte laden
   const nextCard = async () => {
     setFlipped(false);
-
     await loadVocab();
   };
 
-  if (loading) return <p>Lade...</p>;
+  // Laden der Seite
+  if (loading) {
+    return (
+      <>
+        <Header title="Mathematik lernen" backHref="/" />
+
+        <main className={styles.content}>
+          <Loading />
+        </main>
+      </>
+    );
+  }
 
   // returnt die fertige Seite
   return (

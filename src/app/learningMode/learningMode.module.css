@@ -60,8 +60,13 @@
   text-align: center;
   color: black;
   margin-top: 10px;
-  width: 100%;
+  width: calc(100% - 40px);
+  max-width: 100%;
   font-size: 1.5rem;
+  padding: 0 10px;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .answer-line {
@@ -120,4 +125,15 @@
 
 .wrong-btn {
   background-color: var(--red);
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 340px; /* Höhe der Karte */
+  width: 90%;
+  max-width: 360px;
+  font-size: 1.5rem;
+  text-align: center;
 }

@@ -7,23 +7,30 @@ import { useEffect, useState } from "react";
 import styles from "./cardsView.module.css";
 import Header from "../components/Header/Header";
 import Link from "next/link";
+import Loading from "@/app/components/Loading/Loading";
 
 // definiert die States der Karten
 export default function CardsView() {
-  const [cards, setCards] = useState<{ question: string; answer: string }[]>([]);
+  const [cards, setCards] = useState<
+    { question: string; answer: string }[]
+  >([]);
   const [loading, setLoading] = useState(true);
-  const [flipped, setFlipped] = useState<boolean[]>([]); // welche Karten umgedreht sind
+  const [flipped, setFlipped] = useState<boolean[]>([]);
 
-  // Zeigt die Karten so an, dass nur die Vorderseite auf der Übersicht zu sehen ist, Daten kommen per API
+  // Daten laden
   useEffect(() => {
     async function fetchVocab() {
       try {
-        const res = await fetch("/api/vocab"); // alle Vokabeln holen
+        setLoading(true);
+
+        const res = await fetch("/api/vocab");
         const data = await res.json();
+
         setCards(data);
-        setFlipped(new Array(data.length).fill(false)); // alle Karten starten ungedreht
+        setFlipped(new Array(data.length).fill(false));
       } catch (err) {
         console.error("Fehler beim Laden der Vokabeln:", err);
+        setCards([]);
       } finally {
         setLoading(false);
       }
@@ -32,51 +39,64 @@ export default function CardsView() {
     fetchVocab();
   }, []);
 
-  // Setzt Index für den geflippten Zustand
+  // Flip Funktion
   const toggleCard = (index: number) => {
-    setFlipped(prev => {
+    setFlipped((prev) => {
       const newFlipped = [...prev];
       newFlipped[index] = !newFlipped[index];
       return newFlipped;
     });
   };
 
-  // Message, falls die Datenübertragung länger dauert, Laden sollte optimiert werden
+  // lädt Karten
   if (loading) {
-    return <p>Lädt...</p>;
-  }
-
-  // returnt die Elemente der Seite und zeigt mit map alle Elemente an
-  return (
+    return (
       <>
         <Header title="Alle Vokabelkarten" backHref="/" />
+
         <main className={styles.app}>
-          <div className={styles.newCardContainer}>
-            <Link className={styles.button} href="/editCards">
-              + Neue Karte
-            </Link>
-          </div>
-          <ul className={styles.content}>
-            {cards.map((card, index) => (
-                <li
-                    key={index}
-                    className={styles.li}
-                    onClick={() => toggleCard(index)}
-                    style={{ cursor: "pointer" }}
-                >
+          <Loading />
+        </main>
+      </>
+    );
+  }
+
+  // returnt Seite mit allen Buttons sowie den Daten aus der DB
+  return (
+    <>
+      <Header title="Alle Vokabelkarten" backHref="/" />
+
+      <main className={styles.app}>
+        <div className={styles.newCardContainer}>
+          <Link className={styles.button} href="/editCards">
+            + Neue Karte
+          </Link>
+        </div>
+
+        <ul className={styles.content}>
+          {cards.map((card, index) => (
+            <li
+              key={index}
+              className={styles.li}
+              onClick={() => toggleCard(index)}
+              style={{ cursor: "pointer" }}
+            >
               <span>
                 {flipped[index] ? card.answer : card.question}
               </span>
-                  <Link
-                      className={styles.button}
-                      href={`/editCards?question=${encodeURIComponent(card.question)}&answer=${encodeURIComponent(card.answer)}`}
-                  >
-                    Bearbeiten
-                  </Link>
-                </li>
-            ))}
-          </ul>
-        </main>
-      </>
+
+              <Link
+                className={styles.button}
+                href={`/editCards?question=${encodeURIComponent(
+                  card.question
+                )}&answer=${encodeURIComponent(card.answer)}`}
+              >
+                Bearbeiten
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </main>
+    </>
   );
 }

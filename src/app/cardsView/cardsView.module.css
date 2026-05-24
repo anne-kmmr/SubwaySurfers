@@ -47,3 +47,13 @@
 .button:hover {
   background-color: var(--blue);
 }
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  width: 100%;
+  font-size: 1.5rem;
+  text-align: center;
+}
