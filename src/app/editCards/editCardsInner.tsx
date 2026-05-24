@@ -5,8 +5,7 @@ import styles from "./editCardStyles.module.css";
 import Header from "../components/Header/Header";
 import { useSearchParams } from "next/navigation";
 
-import PopupAdd from "../components/Popup/PopupAdd";
-import PopupConfirm from "../components/Popup/PopupConfirm";
+import Popup from "../components/Popup/Popup";
 
 const EditCardsInner: React.FC = () => {
     const searchParams = useSearchParams();
@@ -17,10 +16,11 @@ const EditCardsInner: React.FC = () => {
     const [frageFontSize, setFrageFontSize] = useState(20);
     const [antwortFontSize, setAntwortFontSize] = useState(20);
 
-    // Popup State
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState("");
-    const [popupMode, setPopupMode] = useState<"add" | "confirm">("add");
+    const [popupType, setPopupType] = useState<
+        "success" | "error"
+    >("success");
 
     const isEditMode =
         Boolean(searchParams.get("question") || searchParams.get("answer"));
@@ -48,13 +48,10 @@ const EditCardsInner: React.FC = () => {
         else setAntwortFontSize(16);
     }, [antwort]);
 
-    // echte Speicherlogik
     const saveCard = () => {
-        console.log("Gespeichert:");
-        console.log("Frage:", frage);
-        console.log("Antwort:", antwort);
+        console.log("Gespeichert:", { frage, antwort });
 
-        setPopupMode("add");
+        setPopupType("success");
         setPopupMessage(
             isEditMode
                 ? "Änderung erfolgreich gespeichert!"
@@ -65,55 +62,47 @@ const EditCardsInner: React.FC = () => {
 
         setTimeout(() => {
             setShowPopup(false);
-        }, 1500);
+
+            // ✅ NUR im Create-Modus leeren
+            if (!isEditMode) {
+                setFrage("");
+                setAntwort("");
+            }
+        }, 1200);
     };
 
-    // Klick auf Speichern
     const handleSpeichern = () => {
-        if (isEditMode) {
-            setPopupMode("confirm");
-            setPopupMessage("Änderungen übernehmen?");
+        if (!frage.trim() || !antwort.trim()) {
+            setPopupType("error");
+            setPopupMessage(
+                "Bitte fülle sowohl Frage als auch Antwort aus."
+            );
             setShowPopup(true);
-        } else {
-            saveCard();
+
+            setTimeout(() => {
+                setShowPopup(false);
+            }, 1500);
+
+            return;
         }
+
+        saveCard();
     };
 
     const handleAbbrechen = () => {
         console.log("Abgebrochen");
     };
 
-    const preventEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
-        }
-    };
-
     return (
         <>
             <Header title="Karte Bearbeiten" backHref="/" />
 
-            {/* POPUP ADD */}
-            {popupMode === "add" && (
-                <PopupAdd
-                    open={showPopup}
-                    message={popupMessage}
-                    onClose={() => setShowPopup(false)}
-                />
-            )}
-
-            {/* POPUP CONFIRM */}
-            {popupMode === "confirm" && (
-                <PopupConfirm
-                    open={showPopup}
-                    message={popupMessage}
-                    onCancel={() => setShowPopup(false)}
-                    onConfirm={() => {
-                        setShowPopup(false);
-                        saveCard();
-                    }}
-                />
-            )}
+            <Popup
+                open={showPopup}
+                message={popupMessage}
+                type={popupType}
+                onClose={() => setShowPopup(false)}
+            />
 
             <main className={styles.wrapper}>
                 <div className={styles.content}>
@@ -122,10 +111,13 @@ const EditCardsInner: React.FC = () => {
 
                         <textarea
                             className={styles.input}
-                            style={{ fontSize: `${frageFontSize}px` }}
+                            style={{
+                                fontSize: `${frageFontSize}px`,
+                            }}
                             value={frage}
-                            onChange={(e) => setFrage(e.target.value)}
-                            onKeyDown={preventEnter}
+                            onChange={(e) =>
+                                setFrage(e.target.value)
+                            }
                         />
                     </div>
 
@@ -134,10 +126,13 @@ const EditCardsInner: React.FC = () => {
 
                         <textarea
                             className={styles.input}
-                            style={{ fontSize: `${antwortFontSize}px` }}
+                            style={{
+                                fontSize: `${antwortFontSize}px`,
+                            }}
                             value={antwort}
-                            onChange={(e) => setAntwort(e.target.value)}
-                            onKeyDown={preventEnter}
+                            onChange={(e) =>
+                                setAntwort(e.target.value)
+                            }
                         />
                     </div>
                 </div>

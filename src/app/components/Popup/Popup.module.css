@@ -1,7 +1,7 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,46 +15,53 @@
   min-width: 240px;
   max-width: 340px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
   animation: pop 0.15s ease-out;
 }
 
+/* ICON BASE */
+.iconSuccess,
+.iconError {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+/* SUCCESS */
+.iconSuccess {
+  background: #2ecc71;
+}
+
+/* ERROR */
+.iconError {
+  background: #e74c3c;
+}
+
+/* MESSAGE */
 .message {
   font-size: 1rem;
   margin: 0;
 }
 
-.icon {
-  font-size: 2rem;
-  margin-bottom: 10px;
+/* optional error border (kein Hintergrund!) */
+.popupError {
+  border: 2px solid #e74c3c;
 }
 
-.actions {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 18px;
-}
-
-.button {
-  flex: 1;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.confirm {
-  background: var(--blue);
-  color: white;
-}
-
-.cancel {
-  background: var(--grey);
-  color: white;
-}
-
+/* animation */
 @keyframes pop {
   from {
     transform: scale(0.9);

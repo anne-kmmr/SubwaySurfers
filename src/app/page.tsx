@@ -1,11 +1,9 @@
-// Ursprüngliche Implementation und Idee durch Luca
-// Überarbeitung durch Anne
-
 "use client";
 
 import styles from "./Home.module.css";
 import Header from "./components/Header/Header";
 import EyeIcon from "@/app/components/Icons/EyeIcon/EyeIcon";
+import Loading from "@/app/components/Loading/Loading";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -16,10 +14,8 @@ type Set = {
   color: string;
 };
 
-// Verwendbare Farben
 const setColors = ["--green", "--yellow", "--blue"];
 
-// export function für den fetch per API und die Rückgabe der Daten
 export default function HomePage() {
   const [sets, setSets] = useState<Set[]>([]);
   const [loading, setLoading] = useState(true);
@@ -27,6 +23,8 @@ export default function HomePage() {
   useEffect(() => {
     const fetchSets = async () => {
       try {
+        setLoading(true);
+
         const res = await fetch("/api/sets");
         const data = await res.json();
 
@@ -51,20 +49,20 @@ export default function HomePage() {
     fetchSets();
   }, []);
 
-  // Loading Zustand der Startseite
+  // 🔥 LOADING STATE → jetzt mit deiner Komponente
   if (loading) {
     return (
       <>
         <Header title="Home" />
 
         <main className={styles.container}>
-          <div className={styles.loading}>Lade...</div>
+          <Loading />
         </main>
       </>
     );
   }
 
-  // returned Homeseite und mappt dabei die Einträge, je nach Zustand der Datenbank
+  // 🔥 NORMAL STATE
   return (
     <>
       <Header title="Home" />
@@ -110,7 +108,7 @@ export default function HomePage() {
                     minWidth: "50px",
                   }}
                 >
-                  <EyeIcon className={styles.EyeIcon} />
+                  <EyeIcon />
                 </Link>
 
                 <Link

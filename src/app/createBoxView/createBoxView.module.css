@@ -59,7 +59,9 @@
   text-decoration: none;
   color: var(--white);
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
 
 .button:nth-child(1) {
