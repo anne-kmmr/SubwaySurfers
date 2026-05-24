@@ -18,7 +18,6 @@ type Vocab = {
 export default function LearningMode() {
   const [flipped, setFlipped] = useState(false);
   const [currentVocab, setCurrentVocab] = useState<Vocab | null>(null);
-  const [loading, setLoading] = useState(true);
 
   // Vokabel laden
   useEffect(() => {
@@ -28,8 +27,6 @@ export default function LearningMode() {
   // Sucht Vokabeln mittels API und gibt sie mittels JSON zurück
   const loadVocab = async () => {
     try {
-      setLoading(true);
-
       const res = await fetch("/api/vocab");
       const data: Vocab[] = await res.json();
 
@@ -43,8 +40,6 @@ export default function LearningMode() {
     } catch (err) {
       console.error("Fehler beim Laden der Vokabeln:", err);
       setCurrentVocab(null);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -83,6 +78,11 @@ export default function LearningMode() {
     await loadVocab();
   };
 
+  // 🔥 FIX: kein Loading UI mehr, kein Flash mehr
+  if (!currentVocab) {
+    return null;
+  }
+
   // returnt die fertige Seite
   return (
     <>
@@ -90,11 +90,14 @@ export default function LearningMode() {
 
       <main className={styles.content}>
         <div className={styles["card-container"]}>
-          <div className={`${styles.card} ${flipped ? styles.cardFlipped : ""}`}>
-
+          <div
+            className={`${styles.card} ${
+              flipped ? styles.cardFlipped : ""
+            }`}
+          >
             <div className={styles["card-front"]}>
               <div className={styles.textOutputDiv}>
-                {currentVocab?.question ?? "Keine Vokabel"}
+                {currentVocab.question}
               </div>
 
               <div className={styles["answer-line"]}></div>
@@ -110,7 +113,7 @@ export default function LearningMode() {
 
             <div className={styles["card-back"]}>
               <div className={styles.textOutputDiv}>
-                {currentVocab?.answer ?? "Keine Vokabel"}
+                {currentVocab.answer}
               </div>
 
               <div className={styles["answer-line"]}></div>
