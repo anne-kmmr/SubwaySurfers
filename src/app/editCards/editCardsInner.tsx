@@ -12,6 +12,8 @@ import Popup from "../components/Popup/Popup";
 const EditCardsInner: React.FC = () => {
     const searchParams = useSearchParams();
 
+    const MAX_LENGTH = 60;
+
     const [frage, setFrage] = useState("");
     const [antwort, setAntwort] = useState("");
 
@@ -34,6 +36,7 @@ const EditCardsInner: React.FC = () => {
         setAntwort(searchParams.get("answer") || "");
     }, [searchParams]);
 
+    // Zeichenlimit von 60 Zeichen pro Frage und Antwort
     useEffect(() => {
         const length = frage.length;
 
@@ -122,7 +125,9 @@ const EditCardsInner: React.FC = () => {
                             }}
                             value={frage}
                             onChange={(e) =>
-                                setFrage(e.target.value)
+                                setFrage(
+                                    e.target.value.slice(0, MAX_LENGTH)
+                                )
                             }
                         />
                     </div>
@@ -137,7 +142,9 @@ const EditCardsInner: React.FC = () => {
                             }}
                             value={antwort}
                             onChange={(e) =>
-                                setAntwort(e.target.value)
+                                setAntwort(
+                                    e.target.value.slice(0, MAX_LENGTH)
+                                )
                             }
                         />
                     </div>
