@@ -1,10 +1,12 @@
+// Idee und Implementierung durch Raul
+// Popup-Implementierung durch Anne
+
 "use client";
 
 import React, { useState, useEffect } from "react";
 import styles from "./editCardStyles.module.css";
 import Header from "../components/Header/Header";
 import { useSearchParams } from "next/navigation";
-
 import Popup from "../components/Popup/Popup";
 
 const EditCardsInner: React.FC = () => {
@@ -16,12 +18,14 @@ const EditCardsInner: React.FC = () => {
     const [frageFontSize, setFrageFontSize] = useState(20);
     const [antwortFontSize, setAntwortFontSize] = useState(20);
 
+    // Popup-Zustände
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState("");
     const [popupType, setPopupType] = useState<
         "success" | "error"
     >("success");
 
+    // Prüft auf Vollständigkeit
     const isEditMode =
         Boolean(searchParams.get("question") || searchParams.get("answer"));
 
@@ -63,7 +67,6 @@ const EditCardsInner: React.FC = () => {
         setTimeout(() => {
             setShowPopup(false);
 
-            // ✅ NUR im Create-Modus leeren
             if (!isEditMode) {
                 setFrage("");
                 setAntwort("");
@@ -71,6 +74,7 @@ const EditCardsInner: React.FC = () => {
         }, 1200);
     };
 
+    // Prüft auf Vollständigkeit und gibt Problem als Popup aus
     const handleSpeichern = () => {
         if (!frage.trim() || !antwort.trim()) {
             setPopupType("error");
@@ -89,10 +93,12 @@ const EditCardsInner: React.FC = () => {
         saveCard();
     };
 
+    // für Abbruch
     const handleAbbrechen = () => {
         console.log("Abgebrochen");
     };
 
+    // returnt Seite mit Layout der Karten
     return (
         <>
             <Header title="Karte Bearbeiten" backHref="/" />

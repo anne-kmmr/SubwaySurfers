@@ -48,7 +48,7 @@ export default function CardsView() {
     });
   };
 
-  // 🔥 LOADING STATE → jetzt mit Komponente
+  // lädt Karten
   if (loading) {
     return (
       <>
@@ -61,7 +61,7 @@ export default function CardsView() {
     );
   }
 
-  // NORMAL STATE
+  // returnt Seite mit allen Buttons sowie den Daten aus der DB
   return (
     <>
       <Header title="Alle Vokabelkarten" backHref="/" />

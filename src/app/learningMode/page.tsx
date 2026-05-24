@@ -84,7 +84,7 @@ export default function LearningMode() {
     await loadVocab();
   };
 
-  // 🔥 LOADING STATE → jetzt mit Komponente
+  // Laden der Seite
   if (loading) {
     return (
       <>

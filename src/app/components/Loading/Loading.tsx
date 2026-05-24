@@ -1,3 +1,5 @@
+// Idee und Implementierung durch Anne
+
 export default function Loading() {
   return (
     <>

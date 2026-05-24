@@ -1,3 +1,6 @@
+// Idee und erste Implementierund von Sandro
+// spätere Überarbeitung von Anne
+
 "use client";
 
 import styles from "./Header.module.css";
@@ -11,6 +14,7 @@ type HeaderProps = {
   backHref?: string;
 };
 
+// default für Header mit Buttons/Icons und Titel
 export default function Header({ title, backHref }: HeaderProps) {
   const router = useRouter();
 

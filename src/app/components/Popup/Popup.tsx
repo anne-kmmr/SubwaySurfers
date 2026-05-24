@@ -1,3 +1,5 @@
+// Idee und Implementation durch Anne
+
 "use client";
 
 import styles from "./Popup.module.css";
@@ -9,6 +11,7 @@ type Props = {
   onClose: () => void;
 };
 
+// default des Popups mit allen Informationen
 export default function Popup({
   open,
   message,
@@ -17,8 +20,10 @@ export default function Popup({
 }: Props) {
   if (!open) return null;
 
+  // für Error-Meldungen
   const isError = type === "error";
 
+  //returnt Popup mit Icon und Message, je nach Verwendungszweck
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div
@@ -27,7 +32,6 @@ export default function Popup({
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* ICON */}
         <div
           className={
             isError ? styles.iconError : styles.iconSuccess
@@ -36,7 +40,6 @@ export default function Popup({
           {isError ? "!" : "✓"}
         </div>
 
-        {/* MESSAGE */}
         <p className={styles.message}>{message}</p>
       </div>
     </div>

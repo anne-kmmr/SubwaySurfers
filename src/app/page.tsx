@@ -1,3 +1,6 @@
+// erste Implementierung durch Luca
+// spätere Änderungen durch Anne
+
 "use client";
 
 import styles from "./home.module.css";
@@ -14,8 +17,10 @@ type Set = {
   color: string;
 };
 
+// setzt erlaubte Farben
 const setColors = ["--green", "--yellow", "--blue"];
 
+// default sucht Sets per API und gibt diese gemapt wieder
 export default function HomePage() {
   const [sets, setSets] = useState<Set[]>([]);
   const [loading, setLoading] = useState(true);
@@ -49,7 +54,7 @@ export default function HomePage() {
     fetchSets();
   }, []);
 
-  // 🔥 LOADING STATE → jetzt mit deiner Komponente
+  // lädt Seite
   if (loading) {
     return (
       <>
@@ -62,7 +67,7 @@ export default function HomePage() {
     );
   }
 
-  // 🔥 NORMAL STATE
+  // returnt Seite mit allen Buttons und Co.
   return (
     <>
       <Header title="Home" />
