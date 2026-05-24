@@ -17,15 +17,15 @@ export default function CreateBoxView() {
   const [showDialog, setShowDialog] = useState(false);
   const [dialogMessage, setDialogMessage] = useState("");
 
-  // ✅ NEU: Popup-Typ
   const [dialogType, setDialogType] = useState<
     "success" | "error"
   >("success");
 
   const router = useRouter();
 
+  const MAX_LENGTH = 30;
+
   const handleSpeichern = () => {
-    // ❌ Fehlerfall: kein Titel
     if (!titel.trim()) {
       setDialogType("error");
       setDialogMessage(
@@ -40,7 +40,6 @@ export default function CreateBoxView() {
       return;
     }
 
-    // ✅ Erfolg
     console.log("Neuer Karteikasten erstellt:");
     console.log("Titel:", titel);
 
@@ -65,7 +64,6 @@ export default function CreateBoxView() {
     <>
       <Header title="Neue Karteikartenbox" backHref="/" />
 
-      {/* POPUP */}
       <Popup
         open={showDialog}
         message={dialogMessage}
@@ -83,15 +81,23 @@ export default function CreateBoxView() {
               className={styles.input}
               value={titel}
               placeholder={placeholder}
+              maxLength={MAX_LENGTH}
               onBlur={() =>
                 !titel &&
                 setPlaceholder(
                   "Wie soll dein Kästchen heißen?"
                 )
               }
-              onChange={(e) => setTitel(e.target.value)}
+              onChange={(e) =>
+                setTitel(e.target.value.slice(0, MAX_LENGTH))
+              }
               style={{ fontFamily: "inherit" }}
             />
+
+            {/* 🔥 optional: Zeichenanzeige */}
+            <p className={styles.counter}>
+              {titel.length}/{MAX_LENGTH}
+            </p>
           </div>
         </div>
 

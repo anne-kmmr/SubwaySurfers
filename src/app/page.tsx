@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "./Home.module.css";
+import styles from "./home.module.css";
 import Header from "./components/Header/Header";
 import EyeIcon from "@/app/components/Icons/EyeIcon/EyeIcon";
 import Loading from "@/app/components/Loading/Loading";

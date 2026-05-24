@@ -5,31 +5,69 @@
   width: 100%;
   background: var(--offwhiteblue);
   box-shadow: 0 0.9vw 2.2vw rgba(0, 0, 0, 0.12);
-  padding: clamp(10px, 2vw, 14px) 0;
+
+  padding: 16px 0;
+
+  /* 🔥 etwas mehr Platz */
+  height: 88px;
+  box-sizing: border-box;
 }
 
 .headerContainer {
-  width: 100%;
-  margin: 0 auto;
+  position: relative;
   max-width: var(--appMaxW);
-  padding: 0 clamp(14px, 4vw, 22px);
-  display: grid;
-  grid-template-columns: 44px 1fr 44px;
+  margin: 0 auto;
+  padding: 0 18px;
+
+  display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+
+  height: 100%;
 }
 
+/* LINKS */
+.left {
+  position: absolute;
+  left: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+}
+
+/* TITEL */
 .headerTitle {
   margin: 0;
   text-align: center;
-  line-height: 1.05;
+
+  /* 🔥 leicht größer für bessere Präsenz */
+  font-size: clamp(22px, 5.2vw, 34px);
+  line-height: 1.25;
   letter-spacing: 0.02em;
+
+  max-width: 70%;
+
+  /* max 2 Zeilen */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+
+  /* 🔥 saubere Zentrierung im festen Header */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.bigTitle {
-  font-size: clamp(24px, 6vw, 36px);
-}
+/* RECHTS */
+.rightSpacer {
+  position: absolute;
+  right: 18px;
 
-.smallTitle {
-  font-size: clamp(18px, 4.5vw, 26px);
+  width: 44px;
+  height: 44px;
 }
