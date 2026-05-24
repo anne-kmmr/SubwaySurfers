@@ -13,7 +13,7 @@ const chewy = Chewy({
 
 // legt Metadaten fest
 export const metadata: Metadata = {
-  title: "Flashcard App",
+  title: "SubwaySurfers Flashcards",
   description: "A Flashcard App for kids",
   icons: {
       icon: "/skateboard-App-Icon.svg",
