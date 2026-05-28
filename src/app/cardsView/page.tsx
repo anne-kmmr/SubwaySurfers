@@ -8,16 +8,34 @@ import styles from "./cardsView.module.css";
 import Header from "../components/Header/Header";
 import Link from "next/link";
 import Loading from "@/app/components/Loading/Loading";
+import Trashcan from "../components/Icons/Trashcan/Trashcan";
+import Popup from "../components/Popup/Popup";
 
-// definiert die States der Karten
+type Card = {
+  id: string;
+  question: string;
+  answer: string;
+};
+
 export default function CardsView() {
-  const [cards, setCards] = useState<
-    { question: string; answer: string }[]
-  >([]);
+  const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(true);
   const [flipped, setFlipped] = useState<boolean[]>([]);
+  const [ascending, setAscending] = useState(true);
 
-  // Daten laden
+  // Popup State
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [cardToDelete, setCardToDelete] = useState<string | null>(null);
+
+  // behält Ordnung bei
+  useEffect(() => {
+    const savedSort = localStorage.getItem("sortAscending");
+    if (savedSort !== null) {
+      setAscending(savedSort === "true");
+    }
+  }, []);
+
+  // sucht nach Vokabeln
   useEffect(() => {
     async function fetchVocab() {
       try {
@@ -26,8 +44,18 @@ export default function CardsView() {
         const res = await fetch("/api/vocab");
         const data = await res.json();
 
-        setCards(data);
-        setFlipped(new Array(data.length).fill(false));
+        const savedSort = localStorage.getItem("sortAscending");
+        const isAsc = savedSort === "true";
+
+        const sorted = [...data].sort((a: Card, b: Card) =>
+            isAsc
+                ? a.question.localeCompare(b.question)
+                : b.question.localeCompare(a.question)
+        );
+
+        setCards(sorted);
+        setFlipped(new Array(sorted.length).fill(false));
+        setAscending(isAsc);
       } catch (err) {
         console.error("Fehler beim Laden der Vokabeln:", err);
         setCards([]);
@@ -39,7 +67,7 @@ export default function CardsView() {
     fetchVocab();
   }, []);
 
-  // Flip Funktion
+  // "flipped" karte
   const toggleCard = (index: number) => {
     setFlipped((prev) => {
       const newFlipped = [...prev];
@@ -48,55 +76,126 @@ export default function CardsView() {
     });
   };
 
-  // lädt Karten
+  // Popup und delete
+  const askDeleteCard = (id: string) => {
+    setCardToDelete(id);
+    setPopupOpen(true);
+  };
+
+  // confirmed das Delete und löscht
+  const confirmDelete = async () => {
+    if (!cardToDelete) return;
+
+    try {
+      const res = await fetch("/api/vocab", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: cardToDelete }),
+      });
+
+      if (!res.ok) throw new Error("Fehler beim Löschen");
+
+      const updated = cards.filter((c) => c.id !== cardToDelete);
+
+      setCards(updated);
+      setFlipped(new Array(updated.length).fill(false));
+
+      setPopupOpen(false);
+      setCardToDelete(null);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Abbrechen-Button-Systematik
+  const cancelDelete = () => {
+    setPopupOpen(false);
+    setCardToDelete(null);
+  };
+
+  // sortiert nach A-Z oder Z-A
+  const sortCards = () => {
+    const newAscending = !ascending;
+
+    const sorted = [...cards].sort((a, b) =>
+        newAscending
+            ? a.question.localeCompare(b.question)
+            : b.question.localeCompare(a.question)
+    );
+
+    setCards(sorted);
+    setAscending(newAscending);
+
+    localStorage.setItem("sortAscending", String(newAscending));
+  };
+
+  // lädt die Seite
   if (loading) {
     return (
-      <>
-        <Header title="Alle Vokabelkarten" backHref="/" />
-
-        <main className={styles.app}>
-          <Loading />
-        </main>
-      </>
+        <>
+          <Header title="{} Vokabelkarten" backHref="/" />
+          <main className={styles.app}>
+            <Loading />
+          </main>
+        </>
     );
   }
 
-  // returnt Seite mit allen Buttons sowie den Daten aus der DB
+  // returnt die fertige Seite mit allen Buttons und Co.
   return (
-    <>
-      <Header title="Alle Vokabelkarten" backHref="/" />
+      <>
+        <Header title="{} Vokabelkarten" backHref="/" />
 
-      <main className={styles.app}>
-        <div className={styles.newCardContainer}>
-          <Link className={styles.button} href="/editCards">
-            + Neue Karte
-          </Link>
-        </div>
+        <main className={styles.app}>
+          <div className={styles.newCardContainer}>
+            <Link className={styles.button} href="/editCards">
+              + Neue Karte
+            </Link>
 
-        <ul className={styles.content}>
-          {cards.map((card, index) => (
-            <li
-              key={index}
-              className={styles.li}
-              onClick={() => toggleCard(index)}
-              style={{ cursor: "pointer" }}
-            >
+            <button className={styles.button} onClick={sortCards}>
+              Sortieren {ascending ? "A-Z" : "Z-A"}
+            </button>
+          </div>
+
+          <ul className={styles.content}>
+            {cards.map((card, index) => (
+                <li
+                    key={card.id}
+                    className={styles.li}
+                    onClick={() => toggleCard(index)}
+                    style={{ cursor: "pointer" }}
+                >
               <span>
                 {flipped[index] ? card.answer : card.question}
               </span>
 
-              <Link
-                className={styles.button}
-                href={`/editCards?question=${encodeURIComponent(
-                  card.question
-                )}&answer=${encodeURIComponent(card.answer)}`}
-              >
-                Bearbeiten
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </main>
-    </>
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    <Link
+                        className={styles.button}
+                        href={`/editCards?question=${encodeURIComponent(
+                            card.question
+                        )}&answer=${encodeURIComponent(card.answer)}`}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                      Bearbeiten
+                    </Link>
+
+                    <Trashcan onDelete={() => askDeleteCard(card.id)} />
+                  </div>
+                </li>
+            ))}
+          </ul>
+
+          <Popup
+              open={popupOpen}
+              type="error"
+              message="Willst du diese Karte wirklich löschen?"
+              onClose={cancelDelete}
+              onConfirm={confirmDelete}
+          />
+        </main>
+      </>
   );
 }

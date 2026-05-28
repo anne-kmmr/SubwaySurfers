@@ -1,7 +1,7 @@
 Page.tsx
 
 Zweck:
-Die Datei page.tsx implementiert die Seite „Karteikasten“. Sie stellt die drei Karteikästen (Zu Lernen, In Arbeit, Gelernt) dar und enthält die Topbar mit Zurücknavigations- und Einstellungs-Icon.
+Die Datei LearningModeClient.tsx implementiert die Seite „Karteikasten“. Sie stellt die drei Karteikästen (Zu Lernen, In Arbeit, Gelernt) dar und enthält die Topbar mit Zurücknavigations- und Einstellungs-Icon.
 
 1. Font "Chewy" deklariert. Kommt zusammen mit der Topbar in die layout.tsx, wenn
 2. BoxCard Komponente stellt einzelne Karteikasten dar. Die Props bestehen aus dem Titel des Kasten, wie "Zu Lernen", der Anzahl an Karten, der Variante, wie "red | yellow | green", und der href Zielroute. Eine Box besteht im Wesentllichen aus dem BoxLidTop, der ist rein visuell für den 3D-Look verantwortlich, dem boxLid, der die Frontseite des Deckels mit dem Titel abbildet, und dem BoxBody, der den Korpus der Kiste mit Kartenanzahl zeigt, und dem BoxShadow, der rein Visuell für den Schatten verantwortlich ist, und aufgrund des - margins des BoxBody notwendig war. 

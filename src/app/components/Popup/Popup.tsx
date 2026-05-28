@@ -9,39 +9,52 @@ type Props = {
   message: string;
   type?: "success" | "error";
   onClose: () => void;
+  onConfirm?: () => void; // optional für Delete-Confirm
 };
 
 // default des Popups mit allen Informationen
 export default function Popup({
-  open,
-  message,
-  type = "success",
-  onClose,
-}: Props) {
+                                open,
+                                message,
+                                type = "success",
+                                onClose,
+                                onConfirm,
+                              }: Props) {
   if (!open) return null;
 
-  // für Error-Meldungen
   const isError = type === "error";
 
-  //returnt Popup mit Icon und Message, je nach Verwendungszweck
+  // retunted Popup, je nach Gebrauch und Zustand
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div
-        className={`${styles.popup} ${
-          isError ? styles.popupError : ""
-        }`}
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className={styles.overlay} onClick={onClose}>
         <div
-          className={
-            isError ? styles.iconError : styles.iconSuccess
-          }
+            className={`${styles.popup} ${
+                isError ? styles.popupError : ""
+            }`}
+            onClick={(e) => e.stopPropagation()}
         >
-          {isError ? "!" : "✓"}
-        </div>
+          <div
+              className={
+                isError ? styles.iconError : styles.iconSuccess
+              }
+          >
+            {isError ? "!" : "✓"}
+          </div>
 
-        <p className={styles.message}>{message}</p>
+          <p className={styles.message}>{message}</p>
+
+          {onConfirm && (
+              <div className={styles.actions}>
+                <button onClick={onClose}>
+                  Abbrechen
+                </button>
+
+                <button onClick={onConfirm}>
+                  OK
+                </button>
+              </div>
+          )}
+        </div>
       </div>
-    </div>
   );
 }
