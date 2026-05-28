@@ -17,10 +17,8 @@ type Set = {
   color: string;
 };
 
-// setzt erlaubte Farben
 const setColors = ["--green", "--yellow", "--blue"];
 
-// default sucht Sets per API und gibt diese gemapt wieder
 export default function HomePage() {
   const [sets, setSets] = useState<Set[]>([]);
   const [loading, setLoading] = useState(true);
@@ -54,83 +52,83 @@ export default function HomePage() {
     fetchSets();
   }, []);
 
-  // lädt Seite
   if (loading) {
     return (
+        <>
+          <Header title="Home" />
+
+          <main className={styles.container}>
+            <Loading />
+          </main>
+        </>
+    );
+  }
+
+  return (
       <>
         <Header title="Home" />
 
         <main className={styles.container}>
-          <Loading />
+          <div className={styles.newBoxContainer}>
+            <Link className={styles.newBoxLink} href="/createBoxView">
+              + Neue Karteikartenbox
+            </Link>
+          </div>
+
+          <div className={styles.cardsWrapper}>
+            {sets.map((set) => (
+                <div
+                    key={set.id}
+                    className={styles.card}
+                    style={{
+                      borderLeft: `10px solid var(${set.color})`,
+                    }}
+                >
+                  <h2>{set.title}</h2>
+                  <p>{set.count} Karten</p>
+
+                  <div className={styles.buttonRow}>
+
+                    {/* 🔥 FIX: SET WIRD JETZT MITGEGEBEN */}
+                    <Link
+                        href={`/learningMode?set=${encodeURIComponent(set.title)}`}
+                        className={styles.button}
+                        style={{
+                          backgroundColor: `var(${set.color})`,
+                          color: "white",
+                        }}
+                    >
+                      Lernen
+                    </Link>
+
+                    <Link
+                        href="/cardsView"
+                        className={styles.button}
+                        style={{
+                          backgroundColor: "var(--red)",
+                          color: "white",
+                          padding: "10px",
+                          minWidth: "50px",
+                        }}
+                    >
+                      <EyeIcon />
+                    </Link>
+
+                    <Link
+                        href="/flashcardboxes"
+                        className={styles.button}
+                        style={{
+                          backgroundColor: "var(--purple)",
+                          color: "white",
+                        }}
+                    >
+                      Karteikasten
+                    </Link>
+                  </div>
+                </div>
+            ))}
+          </div>
         </main>
       </>
-    );
-  }
-
-  // returnt Seite mit allen Buttons und Co.
-  return (
-    <>
-      <Header title="Home" />
-
-      <main className={styles.container}>
-        <div className={styles.newBoxContainer}>
-          <Link className={styles.newBoxLink} href="/createBoxView">
-            + Neue Karteikartenbox
-          </Link>
-        </div>
-
-        <div className={styles.cardsWrapper}>
-          {sets.map((set) => (
-            <div
-              key={set.id}
-              className={styles.card}
-              style={{
-                borderLeft: `10px solid var(${set.color})`,
-              }}
-            >
-              <h2>{set.title}</h2>
-              <p>{set.count} Karten</p>
-
-              <div className={styles.buttonRow}>
-                <Link
-                  href="/learningMode"
-                  className={styles.button}
-                  style={{
-                    backgroundColor: `var(${set.color})`,
-                    color: "white",
-                  }}
-                >
-                  Lernen
-                </Link>
-
-                <Link
-                  href="/cardsView"
-                  className={styles.button}
-                  style={{
-                    backgroundColor: "var(--red)",
-                    color: "white",
-                    padding: "10px",
-                    minWidth: "50px",
-                  }}
-                >
-                  <EyeIcon />
-                </Link>
-
-                <Link
-                  href="/flashcardboxes"
-                  className={styles.button}
-                  style={{
-                    backgroundColor: "var(--purple)",
-                    color: "white",
-                  }}
-                >
-                  Karteikasten
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </main>
-    </>
   );
 }

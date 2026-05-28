@@ -5,6 +5,7 @@
 import { useEffect, useState } from "react";
 import styles from "./learningMode.module.css";
 import Header from "../components/Header/Header";
+import { useSearchParams } from "next/navigation";
 
 type Vocab = {
   id: number;
@@ -14,23 +15,36 @@ type Vocab = {
   status?: string;
 };
 
-// Definition State
 export default function LearningMode() {
   const [flipped, setFlipped] = useState(false);
   const [currentVocab, setCurrentVocab] = useState<Vocab | null>(null);
+
+  const searchParams = useSearchParams();
+
+  const currentSet = searchParams.get("set");
+  const currentStatus = searchParams.get("status");
 
   // Vokabel laden
   useEffect(() => {
     loadVocab();
   }, []);
 
-  // Sucht Vokabeln mittels API und gibt sie mittels JSON zurück
   const loadVocab = async () => {
     try {
-      const res = await fetch("/api/vocab");
-      const data: Vocab[] = await res.json();
+      const query = new URLSearchParams();
 
-      console.log("VOCAB DATA:", data);
+      if (currentSet) {
+        query.append("set", currentSet);
+      }
+
+      if (currentStatus) {
+        query.append("status", currentStatus);
+      }
+
+      query.append("random", "true");
+
+      const res = await fetch(`/api/vocab?${query.toString()}`);
+      const data: Vocab[] = await res.json();
 
       if (data.length > 0) {
         setCurrentVocab(data[0]);
@@ -45,17 +59,11 @@ export default function LearningMode() {
 
   // Status speichern
   const updateStatus = async (status: "correct" | "wrong") => {
-    console.log("UPDATE STATUS CLICKED:", status);
-    console.log("CURRENT VOCAB:", currentVocab);
-
-    if (!currentVocab) {
-      console.error("Keine Vokabel geladen");
-      return;
-    }
+    if (!currentVocab) return;
 
     try {
-      const res = await fetch("/api/vocab", {
-        method: "POST",
+      await fetch("/api/vocab", {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -64,9 +72,6 @@ export default function LearningMode() {
           status,
         }),
       });
-
-      const result = await res.json();
-      console.log("API RESPONSE:", result);
     } catch (err) {
       console.error("Fehler beim Status-Update:", err);
     }
@@ -78,74 +83,80 @@ export default function LearningMode() {
     await loadVocab();
   };
 
-  // 🔥 FIX: kein Loading UI mehr, kein Flash mehr
   if (!currentVocab) {
-    return null;
+    return (
+        <Header
+            title={`${currentSet || "Vokabeln"} lernen`}
+            backHref="/"
+        />
+    );
   }
 
-  // returnt die fertige Seite
   return (
-    <>
-      <Header title="{} lernen" backHref="/" />
+      <>
+        <Header
+            title={`${currentSet || "Vokabeln"} lernen`}
+            backHref="/"
+        />
 
-      <main className={styles.content}>
-        <div className={styles["card-container"]}>
-          <div
-            className={`${styles.card} ${
-              flipped ? styles.cardFlipped : ""
-            }`}
-          >
-            <div className={styles["card-front"]}>
-              <div className={styles.textOutputDiv}>
-                {currentVocab.question}
-              </div>
+        <main className={styles.content}>
+          <div className={styles["card-container"]}>
+            <div
+                className={`${styles.card} ${
+                    flipped ? styles.cardFlipped : ""
+                }`}
+            >
+              <div className={styles["card-front"]}>
+                <div className={styles.textOutputDiv}>
+                  {currentVocab.question}
+                </div>
 
-              <div className={styles["answer-line"]}></div>
-
-              <button
-                type="button"
-                className={styles["show-answer-btn"]}
-                onClick={() => setFlipped(true)}
-              >
-                Antwort anzeigen
-              </button>
-            </div>
-
-            <div className={styles["card-back"]}>
-              <div className={styles.textOutputDiv}>
-                {currentVocab.answer}
-              </div>
-
-              <div className={styles["answer-line"]}></div>
-
-              <div className={styles["answer-btns"]}>
-                <button
-                  type="button"
-                  className={styles["correct-btn"]}
-                  onClick={async () => {
-                    await updateStatus("correct");
-                    await nextCard();
-                  }}
-                >
-                  Richtig
-                </button>
+                <div className={styles["answer-line"]}></div>
 
                 <button
-                  type="button"
-                  className={styles["wrong-btn"]}
-                  onClick={async () => {
-                    await updateStatus("wrong");
-                    await nextCard();
-                  }}
+                    type="button"
+                    className={styles["show-answer-btn"]}
+                    onClick={() => setFlipped(true)}
                 >
-                  Falsch
+                  Antwort anzeigen
                 </button>
               </div>
-            </div>
 
+              <div className={styles["card-back"]}>
+                <div className={styles.textOutputDiv}>
+                  {currentVocab.answer}
+                </div>
+
+                <div className={styles["answer-line"]}></div>
+
+                <div className={styles["answer-btns"]}>
+                  <button
+                      type="button"
+                      className={styles["correct-btn"]}
+                      onClick={async () => {
+                        await updateStatus("correct");
+                        await nextCard();
+                      }}
+                  >
+                    Richtig
+                  </button>
+
+                  <button
+                      type="button"
+                      className={styles["wrong-btn"]}
+                      onClick={async () => {
+                        await updateStatus("wrong");
+                        await nextCard();
+                      }}
+                  >
+                    Falsch
+                  </button>
+                </div>
+              </div>
+
+            </div>
           </div>
-        </div>
-      </main>
-    </>
+        </main>
+      </>
   );
 }
