@@ -92,6 +92,7 @@ export default function LearningMode() {
     );
   }
 
+  // returnt Header standartisiert bei Fehler oder mit Namen sowie die restliche Seite
   return (
       <>
         <Header

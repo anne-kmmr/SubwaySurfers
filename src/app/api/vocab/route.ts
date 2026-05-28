@@ -1,9 +1,7 @@
 import { sql } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-// -------------------------
-// GET → Vokabeln laden
-// -------------------------
+// GET: Vokabeln laden
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
@@ -39,50 +37,7 @@ export async function GET(req: Request) {
   }
 }
 
-// -------------------------
-// POST → Neue Karte erstellen
-// -------------------------
-export async function POST(req: Request) {
-  try {
-    const {
-      question,
-      answer,
-      set,
-      status,
-    } = await req.json();
-
-    const result = await sql`
-      INSERT INTO vocabulary (
-        question,
-        answer,
-        "set",
-        status
-      )
-      VALUES (
-        ${question},
-        ${answer},
-        ${set},
-        ${status || null}
-      )
-      RETURNING *
-    `;
-
-    return NextResponse.json(result[0]);
-
-  } catch (err) {
-    console.error(err);
-
-    return NextResponse.json(
-        { error: "Create failed" },
-        { status: 500 }
-    );
-  }
-}
-
-// -------------------------
-// PUT → Karte bearbeiten
-// + Status ändern
-// -------------------------
+// PUT: Karte bearbeiten + Status ändern
 export async function PUT(req: Request) {
   try {
     const {
@@ -116,9 +71,7 @@ export async function PUT(req: Request) {
   }
 }
 
-// -------------------------
-// DELETE → Karte löschen
-// -------------------------
+// Delete: Karte löschen
 export async function DELETE(req: Request) {
   try {
     const { id } = await req.json();

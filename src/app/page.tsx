@@ -17,12 +17,13 @@ type Set = {
   color: string;
 };
 
+// setzt Farben und Lademechanismus
 const setColors = ["--green", "--yellow", "--blue"];
-
 export default function HomePage() {
   const [sets, setSets] = useState<Set[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // fetcht und mapt die Vokabeln per API
   useEffect(() => {
     const fetchSets = async () => {
       try {
@@ -52,6 +53,7 @@ export default function HomePage() {
     fetchSets();
   }, []);
 
+  // lädt Home
   if (loading) {
     return (
         <>
@@ -64,6 +66,7 @@ export default function HomePage() {
     );
   }
 
+  // returnt fertige Seite
   return (
       <>
         <Header title="Home" />
@@ -89,7 +92,6 @@ export default function HomePage() {
 
                   <div className={styles.buttonRow}>
 
-                    {/* 🔥 FIX: SET WIRD JETZT MITGEGEBEN */}
                     <Link
                         href={`/learningMode?set=${encodeURIComponent(set.title)}`}
                         className={styles.button}

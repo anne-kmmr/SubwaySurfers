@@ -14,6 +14,7 @@ type HeaderProps = {
   backHref?: string;
 };
 
+// gibt Header mit Button, Icon und Co. zurück
 export default function Header({ title, backHref }: HeaderProps) {
   const router = useRouter();
 
