@@ -78,7 +78,7 @@ export default function CardsView() {
     }
   };
 
-  // Karten sortieren
+  // Karten sortieren, wechselnd von A-Z oder Z-A
   const sortCards = () => {
     const sortedCards = [...cards].sort((a, b) => {
       if (ascending) {
@@ -91,6 +91,7 @@ export default function CardsView() {
     setAscending(!ascending);
   };
 
+  // hier vielleicht noch Änderungen?
   if (loading) {
     return (
         <>
@@ -102,6 +103,7 @@ export default function CardsView() {
     );
   }
 
+  // returnt fertige Seite
   return (
       <>
         <Header title="Alle Vokabelkarten" backHref="/" />

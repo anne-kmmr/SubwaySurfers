@@ -1,7 +1,7 @@
 import { sql } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-// GET: Vokabeln holen
+// Vokabeln holen via Get
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
@@ -20,7 +20,7 @@ export async function GET(req: Request) {
   }
 }
 
-// DELETE: Vokabel löschen
+// Vokabeln löschen via delete
 export async function DELETE(req: Request) {
   try {
     const { id } = await req.json();

@@ -6,10 +6,11 @@ import Image from "next/image";
 import trashcan from "./Trashcan.svg";
 
 type TrashcanProps = {
-    // @ts-ignore
+    // Inteliji?: @ts-ignore
     onDelete: () => void;
 };
 
+// gibt Icon aus und sorgt dafür, das Vokabeln gelöscht werden
 export default function Trashcan({ onDelete }: TrashcanProps) {
     return (
         <button
