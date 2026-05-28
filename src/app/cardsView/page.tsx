@@ -9,6 +9,7 @@ import Header from "../components/Header/Header";
 import Link from "next/link";
 import Loading from "@/app/components/Loading/Loading";
 import Trashcan from "../components/Icons/Trashcan/Trashcan";
+import Popup from "../components/Popup/Popup";
 
 type Card = {
   id: string;
@@ -16,14 +17,25 @@ type Card = {
   answer: string;
 };
 
-// definiert die States der Karten
 export default function CardsView() {
   const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(true);
   const [flipped, setFlipped] = useState<boolean[]>([]);
   const [ascending, setAscending] = useState(true);
 
-  // Daten laden
+  // Popup State
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [cardToDelete, setCardToDelete] = useState<string | null>(null);
+
+  // behält Ordnung bei
+  useEffect(() => {
+    const savedSort = localStorage.getItem("sortAscending");
+    if (savedSort !== null) {
+      setAscending(savedSort === "true");
+    }
+  }, []);
+
+  // sucht nach Vokabeln
   useEffect(() => {
     async function fetchVocab() {
       try {
@@ -32,8 +44,18 @@ export default function CardsView() {
         const res = await fetch("/api/vocab");
         const data = await res.json();
 
-        setCards(data);
-        setFlipped(new Array(data.length).fill(false));
+        const savedSort = localStorage.getItem("sortAscending");
+        const isAsc = savedSort === "true";
+
+        const sorted = [...data].sort((a: Card, b: Card) =>
+            isAsc
+                ? a.question.localeCompare(b.question)
+                : b.question.localeCompare(a.question)
+        );
+
+        setCards(sorted);
+        setFlipped(new Array(sorted.length).fill(false));
+        setAscending(isAsc);
       } catch (err) {
         console.error("Fehler beim Laden der Vokabeln:", err);
         setCards([]);
@@ -45,7 +67,7 @@ export default function CardsView() {
     fetchVocab();
   }, []);
 
-  // Flip Funktion
+  // "flipped" karte
   const toggleCard = (index: number) => {
     setFlipped((prev) => {
       const newFlipped = [...prev];
@@ -54,48 +76,66 @@ export default function CardsView() {
     });
   };
 
-  // Karten löschen (JETZT MIT ID)
-  const deleteCard = async (id: string) => {
+  // Popup und delete
+  const askDeleteCard = (id: string) => {
+    setCardToDelete(id);
+    setPopupOpen(true);
+  };
+
+  // confirmed das Delete und löscht
+  const confirmDelete = async () => {
+    if (!cardToDelete) return;
+
     try {
       const res = await fetch("/api/vocab", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id }),
+        body: JSON.stringify({ id: cardToDelete }),
       });
 
-      if (!res.ok) {
-        throw new Error("Fehler beim Löschen");
-      }
+      if (!res.ok) throw new Error("Fehler beim Löschen");
 
-      const updatedCards = cards.filter((card) => card.id !== id);
+      const updated = cards.filter((c) => c.id !== cardToDelete);
 
-      setCards(updatedCards);
-      setFlipped(new Array(updatedCards.length).fill(false));
+      setCards(updated);
+      setFlipped(new Array(updated.length).fill(false));
+
+      setPopupOpen(false);
+      setCardToDelete(null);
     } catch (err) {
-      console.error("Fehler beim Löschen:", err);
+      console.error(err);
     }
   };
 
-  // Karten sortieren, wechselnd von A-Z oder Z-A
-  const sortCards = () => {
-    const sortedCards = [...cards].sort((a, b) => {
-      if (ascending) {
-        return a.question.localeCompare(b.question);
-      }
-      return b.question.localeCompare(a.question);
-    });
-
-    setCards(sortedCards);
-    setAscending(!ascending);
+  // Abbrechen-Button-Systematik
+  const cancelDelete = () => {
+    setPopupOpen(false);
+    setCardToDelete(null);
   };
 
-  // hier vielleicht noch Änderungen?
+  // sortiert nach A-Z oder Z-A
+  const sortCards = () => {
+    const newAscending = !ascending;
+
+    const sorted = [...cards].sort((a, b) =>
+        newAscending
+            ? a.question.localeCompare(b.question)
+            : b.question.localeCompare(a.question)
+    );
+
+    setCards(sorted);
+    setAscending(newAscending);
+
+    localStorage.setItem("sortAscending", String(newAscending));
+  };
+
+  // lädt die Seite
   if (loading) {
     return (
         <>
-          <Header title="Alle Vokabelkarten" backHref="/" />
+          <Header title="{} Vokabelkarten" backHref="/" />
           <main className={styles.app}>
             <Loading />
           </main>
@@ -103,10 +143,10 @@ export default function CardsView() {
     );
   }
 
-  // returnt fertige Seite
+  // returnt die fertige Seite mit allen Buttons und Co.
   return (
       <>
-        <Header title="Alle Vokabelkarten" backHref="/" />
+        <Header title="{} Vokabelkarten" backHref="/" />
 
         <main className={styles.app}>
           <div className={styles.newCardContainer}>
@@ -142,11 +182,19 @@ export default function CardsView() {
                       Bearbeiten
                     </Link>
 
-                    <Trashcan onDelete={() => deleteCard(card.id)} />
+                    <Trashcan onDelete={() => askDeleteCard(card.id)} />
                   </div>
                 </li>
             ))}
           </ul>
+
+          <Popup
+              open={popupOpen}
+              type="error"
+              message="Willst du diese Karte wirklich löschen?"
+              onClose={cancelDelete}
+              onConfirm={confirmDelete}
+          />
         </main>
       </>
   );

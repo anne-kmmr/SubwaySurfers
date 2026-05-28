@@ -10,7 +10,7 @@ type TrashcanProps = {
     onDelete: () => void;
 };
 
-// gibt Icon aus und sorgt dafür, das Vokabeln gelöscht werden
+// gibt Icon aus und leitet zur Löschung weiter
 export default function Trashcan({ onDelete }: TrashcanProps) {
     return (
         <button
