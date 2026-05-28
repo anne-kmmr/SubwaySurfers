@@ -10,6 +10,7 @@ import Link from "next/link";
 import Loading from "@/app/components/Loading/Loading";
 import Trashcan from "../components/Icons/Trashcan/Trashcan";
 import Popup from "../components/Popup/Popup";
+import { useSearchParams } from "next/navigation";
 
 type Card = {
   id: string;
@@ -27,6 +28,10 @@ export default function CardsView() {
   const [popupOpen, setPopupOpen] = useState(false);
   const [cardToDelete, setCardToDelete] = useState<string | null>(null);
 
+  // settet "Set" in URL und kann so weiter arbeiten
+  const searchParams = useSearchParams();
+  const currentSet = searchParams.get("set");
+
   // behält Ordnung bei
   useEffect(() => {
     const savedSort = localStorage.getItem("sortAscending");
@@ -41,7 +46,12 @@ export default function CardsView() {
       try {
         setLoading(true);
 
-        const res = await fetch("/api/vocab");
+        const query = new URLSearchParams();
+        if (currentSet) {
+          query.append("set", currentSet);
+        }
+
+        const res = await fetch(`/api/vocab?${query.toString()}`);
         const data = await res.json();
 
         const savedSort = localStorage.getItem("sortAscending");
@@ -65,7 +75,7 @@ export default function CardsView() {
     }
 
     fetchVocab();
-  }, []);
+  }, [currentSet]);
 
   // "flipped" karte
   const toggleCard = (index: number) => {
@@ -109,13 +119,13 @@ export default function CardsView() {
     }
   };
 
-  // Abbrechen-Button-Systematik
+  // Abbrechen
   const cancelDelete = () => {
     setPopupOpen(false);
     setCardToDelete(null);
   };
 
-  // sortiert nach A-Z oder Z-A
+  // sortiert A-Z / Z-A
   const sortCards = () => {
     const newAscending = !ascending;
 
@@ -131,11 +141,14 @@ export default function CardsView() {
     localStorage.setItem("sortAscending", String(newAscending));
   };
 
-  // lädt die Seite
+  // loading
   if (loading) {
     return (
         <>
-          <Header title="{} Vokabelkarten" backHref="/" />
+          <Header
+              title={`${currentSet || "Alle"} Vokabelkarten`}
+              backHref="/"
+          />
           <main className={styles.app}>
             <Loading />
           </main>
@@ -143,10 +156,13 @@ export default function CardsView() {
     );
   }
 
-  // returnt die fertige Seite mit allen Buttons und Co.
+  // returnt Seite mit Vokabeln
   return (
       <>
-        <Header title="{} Vokabelkarten" backHref="/" />
+        <Header
+            title={`${currentSet || "Alle"} Vokabelkarten`}
+            backHref="/"
+        />
 
         <main className={styles.app}>
           <div className={styles.newCardContainer}>
@@ -155,7 +171,7 @@ export default function CardsView() {
             </Link>
 
             <button className={styles.button} onClick={sortCards}>
-              Sortieren {ascending ? "A-Z" : "Z-A"}
+              Sortieren ({ascending ? "Alphabetisch ↑" : "Alphabetisch ↓"})
             </button>
           </div>
 
@@ -167,9 +183,7 @@ export default function CardsView() {
                     onClick={() => toggleCard(index)}
                     style={{ cursor: "pointer" }}
                 >
-              <span>
-                {flipped[index] ? card.answer : card.question}
-              </span>
+                  <span>{flipped[index] ? card.answer : card.question}</span>
 
                   <div style={{ display: "flex", gap: "10px" }}>
                     <Link
