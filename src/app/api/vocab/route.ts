@@ -1,27 +1,48 @@
-// Datei von Anne
-// API zum Holen der Vokabeln aus der DB, welche im Ordner "Lib" sowie in ".env.local" definiert ist
-
 import { sql } from "@/lib/db";
+import { NextResponse } from "next/server";
 
-// Sucht Vokabeln aus der DB und gibt diese aktuell random aus
+// GET: Vokabeln holen
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
-    const limit = parseInt(url.searchParams.get("limit") || "0"); // 0 = alle
+    const limit = parseInt(url.searchParams.get("limit") || "0");
 
     const vocab = await sql`
       SELECT * FROM vocabulary
-                      ${limit > 0 ? sql`LIMIT ${limit}` : sql``}
       ORDER BY RANDOM()
+      ${limit > 0 ? sql`LIMIT ${limit}` : sql``}
     `;
 
-    // JSON-Response und Fehlerbehandlung
-    return new Response(JSON.stringify(vocab), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return NextResponse.json(vocab);
   } catch (err) {
     console.error(err);
-    return new Response(JSON.stringify({ error: "DB Error" }), { status: 500 });
+    return NextResponse.json({ error: "DB Error" }, { status: 500 });
+  }
+}
+
+// DELETE: Vokabel löschen
+export async function DELETE(req: Request) {
+  try {
+    const { id } = await req.json();
+
+    if (!id) {
+      return NextResponse.json(
+          { error: "No id provided" },
+          { status: 400 }
+      );
+    }
+
+    await sql`
+      DELETE FROM vocabulary
+      WHERE id = ${id}
+    `;
+
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json(
+        { error: "Delete failed" },
+        { status: 500 }
+    );
   }
 }
