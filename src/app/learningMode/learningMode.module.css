@@ -58,7 +58,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: black;
+  color: var(--darkblue);
   margin-top: 10px;
   width: calc(100% - 40px);
   max-width: 100%;
