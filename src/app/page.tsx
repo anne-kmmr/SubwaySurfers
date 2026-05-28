@@ -104,7 +104,7 @@ export default function HomePage() {
                     </Link>
 
                     <Link
-                        href="/cardsView"
+                        href={`/cardsView?set=${encodeURIComponent(set.title)}`}
                         className={styles.button}
                         style={{
                           backgroundColor: "var(--red)",

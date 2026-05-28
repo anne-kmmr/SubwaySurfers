@@ -49,6 +49,7 @@
   outline: none;
   font-family: "Chewy", system-ui;
   font-size: clamp(16px, 4vw, 22px);
+  color: var(--darkblue);
   text-align: center;
   display: flex;
   align-items: center;
