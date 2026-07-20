@@ -5,9 +5,10 @@
 
 import React, { useState, useEffect } from "react";
 import styles from "./editCardStyles.module.css";
-import Header from "../components/Header/Header";
+import Header from "../../app/cardsView/components/Header/Header";
 import { useSearchParams } from "next/navigation";
-import Popup from "../components/Popup/Popup";
+import Popup from "../../app/cardsView/components/Popup/Popup";
+
 
 const EditCardsInner: React.FC = () => {
     const searchParams = useSearchParams();
@@ -78,7 +79,7 @@ const EditCardsInner: React.FC = () => {
     };
 
     // Prüft auf Vollständigkeit und gibt Problem als Popup aus
-    const handleSpeichern = () => {
+    const handleSpeichern = async () => {
         if (!frage.trim() || !antwort.trim()) {
             setPopupType("error");
             setPopupMessage(
@@ -91,6 +92,38 @@ const EditCardsInner: React.FC = () => {
             }, 1500);
 
             return;
+        }
+        
+        const id = searchParams.get('id');
+        const set = searchParams.get('set') ?? '';
+        console.log(id);
+
+        if(id) {
+            await fetch('http://localhost:3001/saveCards', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: id,
+                    question: frage,
+                    answer: antwort,
+                })
+            })
+            
+        } else {
+            await fetch('http://localhost:3001/saveCards', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    question: frage,
+                    answer: antwort,
+                    set: set,
+                    status: 'learning',
+                })
+            })
         }
 
         saveCard();

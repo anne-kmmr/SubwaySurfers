@@ -4,8 +4,8 @@
 
 import React, { useState } from "react";
 import styles from "./createBoxView.module.css";
-import Header from "../components/Header/Header";
-import Popup from "../components/Popup/Popup";
+import Header from "../../app/cardsView/components/Header/Header";
+import Popup from "../../app/cardsView/components/Popup/Popup";
 import { useRouter } from "next/navigation";
 
 // Standard-Input
@@ -42,8 +42,10 @@ export default function CreateBoxView() {
 
       return;
     }
-
+    
     // Erstellung Karteikasten bei Success
+
+    router.push(`/editCards?set=${encodeURIComponent(titel.trim())}`)
 
     setDialogType("success");
     setDialogMessage(
@@ -51,10 +53,6 @@ export default function CreateBoxView() {
     );
     setShowDialog(true);
 
-    setTimeout(() => {
-      setShowDialog(false);
-      router.push("/");
-    }, 1500);
   };
 
   // Für Abbruch über Button

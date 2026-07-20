@@ -4,7 +4,9 @@
 
 import Link from "next/link";
 import styles from "./flashcardboxes.module.css";
-import Header from "../components/Header/Header";
+import Header from "../../app/cardsView/components/Header/Header";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 type BoxCardProps = {
   title: string;
@@ -38,11 +40,43 @@ function BoxCard({ title, count, variant, href }: BoxCardProps) {
 
 export default function BoxCardPage() {
     //hier nur Beispielimplementierung von Sandro damals, bitte nachbessern!
-  const counts = {
-    toLearn: 8,
-    inProgress: 4,
-    learned: 3,
-  };
+  const [counts, setCounts] = useState({
+    toLearn: 0,
+    inProgress: 0,
+    learned: 0,
+  });
+
+  const searchParams = useSearchParams();
+  const currentSet = searchParams.get('set')
+
+  useEffect(() => {
+    if (currentSet) {
+    loadCounts();
+    }
+  }, [currentSet])
+
+  const loadCounts = async () => {
+    try{ const response = await fetch(
+      `http://localhost:3001/learningStatus?set=${encodeURIComponent(currentSet ?? '')}`
+    )
+
+    console.log(
+  "API URL:",
+  `http://localhost:3001/learningStatus?set=${encodeURIComponent(currentSet ?? '')}`
+);
+
+    const data = await response.json();
+
+    setCounts({
+      toLearn: data.learning,
+      inProgress: data.inProgress,
+      learned: data.learned,
+    });
+
+    } catch (err) {
+      console.log(err);
+  }
+}
 
   //gibt die drei Boxen zurück
   return (
@@ -53,19 +87,19 @@ export default function BoxCardPage() {
           title="Zu Lernen"
           count={counts.toLearn}
           variant="red"
-          href="/learningMode"
+          href={`/learningMode?set=${encodeURIComponent(currentSet ?? "")}&status=learning`}
         />
         <BoxCard
           title="In Arbeit"
           count={counts.inProgress}
           variant="yellow"
-          href="/learningMode"
+          href={`/learningMode?set=${encodeURIComponent(currentSet ?? "")}&status=inProgress`}
         />
         <BoxCard
           title="Gelernt"
           count={counts.learned}
           variant="green"
-          href="/learningMode"
+          href={`/learningMode?set=${encodeURIComponent(currentSet ?? "")}&status=learned`}
         />
       </main>
     </>
