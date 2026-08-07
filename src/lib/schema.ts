@@ -1,3 +1,4 @@
+// Idee und Implementierung durch Adam
 import {serial, text, pgTable } from 'drizzle-orm/pg-core';
 
 const cards = pgTable('vocabulary', {

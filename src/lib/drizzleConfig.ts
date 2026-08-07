@@ -1,3 +1,4 @@
+// Idee und Implementierung durch Adam
 import { defineConfig } from 'drizzle-kit';
 
 export default defineConfig({

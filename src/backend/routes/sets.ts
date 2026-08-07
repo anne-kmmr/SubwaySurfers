@@ -1,3 +1,5 @@
+// Idee und Implementierung durch Anne
+//spätere Änderungen durch Adam
 import db from './../../lib/db';
 import express from 'express';
 import cards from '../../lib/schema';

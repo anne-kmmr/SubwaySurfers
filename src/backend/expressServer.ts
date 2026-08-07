@@ -1,3 +1,4 @@
+// Idee und Implementierung durch Adam
 import express from 'express';
 import cors from "cors";
 import setsRouter from './routes/sets';

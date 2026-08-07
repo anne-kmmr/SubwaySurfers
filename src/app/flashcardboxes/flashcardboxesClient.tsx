@@ -39,7 +39,7 @@ function BoxCard({ title, count, variant, href }: BoxCardProps) {
 }
 
 export default function BoxCardPage() {
-    //hier nur Beispielimplementierung von Sandro damals, bitte nachbessern!
+    //Der Code mit den verschiedenen Lernstatusen ist von einer KI
   const [counts, setCounts] = useState({
     toLearn: 0,
     inProgress: 0,

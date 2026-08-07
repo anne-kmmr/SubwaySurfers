@@ -1,3 +1,4 @@
+// Idee und Implementierung durch Adam
 import db from '../../lib/db';
 import express from 'express';
 import cards from '../../lib/schema';
@@ -11,6 +12,7 @@ router.get('/', async (req, res) => {
 
         const result = await db
         .select({
+            // Direkte SQl abfragen sind von einer KI
             learning: sql<number>`
             COUNT(*) FILTER (WHERE status = 'learning')
             `,
