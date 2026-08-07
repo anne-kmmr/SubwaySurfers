@@ -29,7 +29,7 @@ export default function HomePage() {
       try {
         setLoading(true);
 
-        const res = await fetch("http://localhost:3001/sets");
+        const res = await fetch("https://subwaysurfers-kw5l.onrender.com/sets");
         const data = await res.json();
 
         if (!Array.isArray(data)) {

@@ -57,7 +57,7 @@ export default function BoxCardPage() {
 
   const loadCounts = async () => {
     try{ const response = await fetch(
-      `http://localhost:3001/learningStatus?set=${encodeURIComponent(currentSet ?? '')}`
+      `http://https://subwaysurfers-kw5l.onrender.com/learningStatus?set=${encodeURIComponent(currentSet ?? '')}`
     )
 
     const data = await response.json();

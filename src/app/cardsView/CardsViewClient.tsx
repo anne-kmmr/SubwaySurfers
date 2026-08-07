@@ -51,7 +51,7 @@ export default function CardsView() {
           query.append("set", currentSet);
         }
 
-        const res = await fetch(`http://localhost:3001/vocab?${query.toString()}`);
+        const res = await fetch(`https://subwaysurfers-kw5l.onrender.com/vocab?${query.toString()}`);
         const data = await res.json();
 
         if (!Array.isArray(data)) {
@@ -102,7 +102,7 @@ export default function CardsView() {
     if (!cardToDelete) return;
 
     try {
-      const res = await fetch("http://localhost:3001/vocab", {
+      const res = await fetch("https://subwaysurfers-kw5l.onrender.com/vocab", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
