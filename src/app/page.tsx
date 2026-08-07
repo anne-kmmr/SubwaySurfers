@@ -4,9 +4,9 @@
 "use client";
 
 import styles from "./home.module.css";
-import Header from "./components/Header/Header";
-import EyeIcon from "@/app/components/Icons/EyeIcon/EyeIcon";
-import Loading from "@/app/components/Loading/Loading";
+import Header from "../app/cardsView/components/Header/Header";
+import EyeIcon from "@/app/cardsView/components/Icons/EyeIcon/EyeIcon";
+import Loading from "@/app/cardsView/components/Loading/Loading";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -29,7 +29,7 @@ export default function HomePage() {
       try {
         setLoading(true);
 
-        const res = await fetch("/api/sets");
+        const res = await fetch("http://localhost:3001/sets");
         const data = await res.json();
 
         if (!Array.isArray(data)) {
@@ -117,7 +117,7 @@ export default function HomePage() {
                     </Link>
 
                     <Link
-                        href="/flashcardboxes"
+                        href={`/flashcardboxes?set=${encodeURIComponent(set.title)}`}
                         className={styles.button}
                         style={{
                           backgroundColor: "var(--purple)",

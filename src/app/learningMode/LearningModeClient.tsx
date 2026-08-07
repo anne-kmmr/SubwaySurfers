@@ -4,7 +4,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./learningMode.module.css";
-import Header from "../components/Header/Header";
+import Header from "../../app/cardsView/components/Header/Header";
 import { useSearchParams } from "next/navigation";
 
 type Vocab = {
@@ -12,7 +12,7 @@ type Vocab = {
   question: string;
   answer: string;
   set: string;
-  status?: string;
+  status: string;
 };
 
 export default function LearningMode() {
@@ -27,7 +27,7 @@ export default function LearningMode() {
   // Vokabel laden
   useEffect(() => {
     loadVocab();
-  }, []);
+  }, [currentSet, currentStatus]);
 
   const loadVocab = async () => {
     try {
@@ -43,7 +43,7 @@ export default function LearningMode() {
 
       query.append("random", "true");
 
-      const res = await fetch(`/api/vocab?${query.toString()}`);
+      const res = await fetch(`http://localhost:3001/vocab?${query.toString()}`);
       const data: Vocab[] = await res.json();
 
       if (data.length > 0) {
@@ -58,11 +58,13 @@ export default function LearningMode() {
   };
 
   // Status speichern
-  const updateStatus = async (status: "correct" | "wrong") => {
+  const updateStatus = async (
+    status:  'learning' | 'inProgress' | 'learned'
+  ) => {
     if (!currentVocab) return;
 
     try {
-      await fetch("/api/vocab", {
+      await fetch("http://localhost:3001/vocab", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -82,6 +84,31 @@ export default function LearningMode() {
     setFlipped(false);
     await loadVocab();
   };
+
+  // Abfrage des statuses
+
+  const handleCorrect = async () => {
+
+  let nextStatus: 'learning' | 'inProgress' | 'learned';
+
+  if(!currentVocab) return;
+
+  switch(currentVocab.status) {
+    case 'learning': nextStatus = 'inProgress';
+      break;
+    
+    case 'inProgress': nextStatus = 'learned';
+      break;
+
+    case 'learned': nextStatus = 'learned';
+      break;
+
+    default: nextStatus = 'learning';
+
+  }
+
+  await updateStatus(nextStatus);
+};
 
   if (!currentVocab) {
     return (
@@ -135,7 +162,7 @@ export default function LearningMode() {
                       type="button"
                       className={styles["correct-btn"]}
                       onClick={async () => {
-                        await updateStatus("correct");
+                        await handleCorrect();
                         await nextCard();
                       }}
                   >
@@ -146,7 +173,7 @@ export default function LearningMode() {
                       type="button"
                       className={styles["wrong-btn"]}
                       onClick={async () => {
-                        await updateStatus("wrong");
+                        await updateStatus('learning');
                         await nextCard();
                       }}
                   >

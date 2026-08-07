@@ -6,10 +6,16 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "express": "tsx  --env-file=.env.local src/backend/expressServer.ts",
+    "dev:all": "concurrently \"npm run dev\" \"npm run express\""
   },
   "dependencies": {
-    "@neondatabase/serverless": "^1.0.2",
+    "@libsql/client": "^0.17.4",
+    "@neondatabase/serverless": "^1.1.0",
+    "cors": "^2.8.6",
+    "drizzle-orm": "^0.45.2",
+    "express": "^5.2.1",
     "next": "^16.1.5",
     "pg": "^8.20.0",
     "react": "^19.2.4",
@@ -18,11 +24,16 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "concurrently": "^10.0.3",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "tsx": "^4.23.0",
     "typescript": "^5"
   }
 }

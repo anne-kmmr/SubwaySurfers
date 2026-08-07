@@ -5,11 +5,11 @@
 
 import { useEffect, useState } from "react";
 import styles from "./cardsView.module.css";
-import Header from "../components/Header/Header";
+import Header from "./components/Header/Header";
 import Link from "next/link";
-import Loading from "@/app/components/Loading/Loading";
-import Trashcan from "../components/Icons/Trashcan/Trashcan";
-import Popup from "../components/Popup/Popup";
+import Loading from "@/app/cardsView/components/Loading/Loading";
+import Trashcan from "./components/Icons/Trashcan/Trashcan";
+import Popup from "./components/Popup/Popup";
 import { useSearchParams } from "next/navigation";
 
 type Card = {
@@ -51,8 +51,13 @@ export default function CardsView() {
           query.append("set", currentSet);
         }
 
-        const res = await fetch(`/api/vocab?${query.toString()}`);
+        const res = await fetch(`http://localhost:3001/vocab?${query.toString()}`);
         const data = await res.json();
+
+        if (!Array.isArray(data)) {
+          console.error("Backend hat kein Array geliefert:", data);
+          return;
+        }
 
         const savedSort = localStorage.getItem("sortAscending");
         const isAsc = savedSort === "true";
@@ -97,7 +102,7 @@ export default function CardsView() {
     if (!cardToDelete) return;
 
     try {
-      const res = await fetch("/api/vocab", {
+      const res = await fetch("http://localhost:3001/vocab", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -166,7 +171,7 @@ export default function CardsView() {
 
         <main className={styles.app}>
           <div className={styles.newCardContainer}>
-            <Link className={styles.button} href="/editCards">
+            <Link className={styles.button} href={`/editCards?set=${currentSet}`}>
               + Neue Karte
             </Link>
 
@@ -188,9 +193,11 @@ export default function CardsView() {
                   <div style={{ display: "flex", gap: "10px" }}>
                     <Link
                         className={styles.button}
-                        href={`/editCards?question=${encodeURIComponent(
+                        href={`/editCards?id=${card.id}&question=${encodeURIComponent(
                             card.question
-                        )}&answer=${encodeURIComponent(card.answer)}`}
+                        )}&answer=${encodeURIComponent(
+                          card.answer
+                        )}`}
                         onClick={(e) => e.stopPropagation()}
                     >
                       Bearbeiten
