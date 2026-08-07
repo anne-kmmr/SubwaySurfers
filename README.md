@@ -31,7 +31,7 @@ Die Anwendung bietet folgende Funktionen:
 
 ### 2.1 Startseite
 
-![Startseite](docsImages/startseite.png)
+![Startseite](docsImages/Startseite.png)
 
 Die Startseite zeigt alle vorhandenen Karteikartenboxen an. Von dort kann der Nutzer:
 
