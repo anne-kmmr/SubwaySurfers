@@ -112,7 +112,7 @@ const EditCardsInner: React.FC = () => {
             })
             
         } else {
-            await fetch('http://https://subwaysurfers-kw5l.onrender.com/saveCards', {
+            await fetch('https://subwaysurfers-kw5l.onrender.com/saveCards', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
