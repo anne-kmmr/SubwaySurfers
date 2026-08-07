@@ -7,7 +7,7 @@ import createCardRouter from './routes/saveCards';
 import learningStatus from './routes/learningStatus';
 
 const api = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 api.use(cors());
 api.use(express.json());
