@@ -43,7 +43,7 @@ export default function LearningMode() {
 
       query.append("random", "true");
 
-      const res = await fetch(`http://localhost:3001/vocab?${query.toString()}`);
+      const res = await fetch(`https://subwaysurfers-kw5l.onrender.com/vocab?${query.toString()}`);
       const data: Vocab[] = await res.json();
 
       if (data.length > 0) {
@@ -64,7 +64,7 @@ export default function LearningMode() {
     if (!currentVocab) return;
 
     try {
-      await fetch("http://localhost:3001/vocab", {
+      await fetch("https://subwaysurfers-kw5l.onrender.com/vocab", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

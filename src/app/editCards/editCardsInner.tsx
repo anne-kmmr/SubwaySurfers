@@ -99,7 +99,7 @@ const EditCardsInner: React.FC = () => {
         console.log(id);
 
         if(id) {
-            await fetch('http://localhost:3001/saveCards', {
+            await fetch('https://subwaysurfers-kw5l.onrender.com/saveCards', {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ const EditCardsInner: React.FC = () => {
             })
             
         } else {
-            await fetch('http://localhost:3001/saveCards', {
+            await fetch('http://https://subwaysurfers-kw5l.onrender.com/saveCards', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
